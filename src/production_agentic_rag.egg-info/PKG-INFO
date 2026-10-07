@@ -1,0 +1,71 @@
+Metadata-Version: 2.4
+Name: production-agentic-rag
+Version: 0.1.0
+Summary: Provider-independent reference implementation for production Agentic RAG.
+License: MIT
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: fastapi>=0.115
+Requires-Dist: uvicorn[standard]>=0.30
+Requires-Dist: pydantic>=2.9
+Provides-Extra: dev
+Requires-Dist: pytest>=8.3; extra == "dev"
+Requires-Dist: ruff>=0.6; extra == "dev"
+Requires-Dist: mypy>=1.13; extra == "dev"
+Requires-Dist: httpx>=0.27; extra == "dev"
+Dynamic: license-file
+
+# Production Agentic RAG
+
+## Why this project exists
+
+A provider-independent reference implementation for building observable, evaluated and secure RAG systems. The repository is intentionally incremental: the deterministic local baseline is the control before Agentic RAG, MCP and provider integrations are added.
+
+## Current status
+
+**Milestone M1 — foundation and baseline, in progress.** Implemented: API bootstrap, health/readiness/version, deterministic document identity, local ingestion/chunking, keyword retrieval, grounded baseline responses and tests. Qdrant, PostgreSQL, Redis, LangGraph, OpenTelemetry and MCP are planned integrations, not fake claims of completion.
+
+## Quick start
+
+```bash
+cp .env.example .env
+python -m venv .venv && . .venv/bin/activate
+make setup
+make test
+uvicorn agentic_rag.api.app:app --reload
+```
+
+Then ingest and query:
+
+```bash
+curl -X POST http://localhost:8000/v1/ingest -H 'content-type: application/json' \
+  -d '{"source":"sample","filename":"guide.md","content":"Qdrant stores vectors. PostgreSQL stores metadata."}'
+curl -X POST http://localhost:8000/v1/query -H 'content-type: application/json' \
+  -d '{"query":"Where are vectors stored?"}'
+```
+
+## Architecture
+
+```mermaid
+flowchart LR
+  D[Documents] --> I[Ingestion + checksum]
+  I --> C[Chunking]
+  C --> S[Storage abstraction]
+  Q[Query API] --> R[Retrieval]
+  S --> R
+  R --> G[Baseline generation]
+  G --> E[Answer + citations]
+```
+
+## Design constraints
+
+- Local deterministic mode works without a commercial provider.
+- Retrieved content is data, not instructions.
+- Duplicate documents are rejected by content checksum.
+- Unsupported files and invalid chunk configuration fail explicitly.
+- Benchmark claims must be backed by versioned artifacts.
+
+## Roadmap
+
+M1: RAG Foundation. M2: Agentic workflow + MCP. M3: evaluation, security and observability. M4: packaging, Cloud Run example and final evidence report. `v1.0.0` is not released automatically.
