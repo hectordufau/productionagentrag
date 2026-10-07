@@ -66,14 +66,25 @@ def analyze_query(query: str) -> dict[str, object]:
     return {"strategy": strategy, "risk": "normal", "normalized": normalized}
 
 
-def _rewrite(query: str) -> str:
-    """Make one deterministic retrieval-oriented rewrite, without an LLM."""
-    rewritten = re.sub(r"\b(what|where|when|who|why|how|is|are|can|could|please)\b", " ", query, flags=re.IGNORECASE)
-    rewritten = re.sub(r"[^\w\s-]", " ", rewritten)
-    rewritten = re.sub(r"\b(storage|stored|storing)\b", "stores", rewritten, flags=re.IGNORECASE)
-    rewritten = re.sub(r"\brefer(?:s|red)?\b", "stores", rewritten, flags=re.IGNORECASE)
-    rewritten = " ".join(rewritten.split())
-    return rewritten or query
+_REWRITE_FILLERS = {"what", "does", "where", "when", "who", "why", "how", "is", "are", "can", "could", "please", "refer", "to", "mean", "meaning"}
+
+
+def rewrite_query(query: str) -> tuple[str, str]:
+    """Return a safe deterministic search rewrite or the original query."""
+    original = " ".join(query.split())
+    tokens = re.findall(r"[\w-]+", original.lower())
+    normalized = {"storage": "stores", "stored": "stores", "storing": "stores"}
+    rewritten_tokens: list[str] = []
+    for token in tokens:
+        if token in _REWRITE_FILLERS:
+            continue
+        token = normalized.get(token, token)
+        if token not in rewritten_tokens:
+            rewritten_tokens.append(token)
+    candidate = " ".join(rewritten_tokens)
+    if len(rewritten_tokens) < 2 or candidate == original.lower():
+        return original, "original"
+    return candidate, "deterministic"
 
 
 class AgenticRAGGraph:
@@ -158,11 +169,13 @@ class AgenticRAGGraph:
 
     def _node_rewrite(self, state: AgenticState) -> AgenticState:
         state["status"] = "RUNNING"
-        state["query"] = _rewrite(state["query"])
+        original_query = state["query"]
+        state["query"], method = rewrite_query(state["query"])
         state["metrics"]["rewrites"] += 1
         if state["evidence_score"] <= 0.1 and state["strategy"] != "hybrid":
             state["strategy"] = "hybrid"
-        self._record(state, "rewrite", query=state["query"], strategy=state["strategy"])
+        state["rewritten_query"] = state["query"]
+        self._record(state, "rewrite", original_query=original_query, rewritten_query=state["query"], rewrite_method=method, strategy=state["strategy"])
         return state
 
     def _node_generate(self, state: AgenticState) -> AgenticState:

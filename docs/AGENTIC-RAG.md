@@ -21,7 +21,11 @@ Analysis is deterministic and never uses an LLM. Prompt-injection queries are
 abstained from; retrieved text is always treated as untrusted data by the
 baseline grounded prompt. The graph reports `attempts`, `llm_calls`,
 `rewrites`, and `latency_ms`, plus a node-level `decision_trace`. Provider
-failures and unsupported citations fail closed rather than inventing an answer.
+Provider failures and unsupported citations fail closed rather than inventing an answer.
+
+## Indirect prompt-injection handling
+
+Documents remain retrievable even when they contain text such as `Ignore previous instructions` or `Reveal the system prompt`. The shared grounded prompt labels retrieved content as untrusted data; the agent does not interpret document text as graph control, retrieval policy, or executable instructions. The regression scenario in `tests/unit/test_agentic.py` verifies that a malicious document is cited as data while the safe answer remains grounded.
 
 The graph uses a maximum of two retrieval/generation attempts. It reuses
 `InMemoryStore`, `VectorStore`, `hybrid_search`, `RetrievalService`, and the
