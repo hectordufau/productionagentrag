@@ -5,8 +5,8 @@
 - **Repository:** `/home/hector/workspace/productionagentrag`
 - **Branch:** `main`
 - **Candidate Commit SHA:** `193e38e31973fe5e4965ca92673eb3bd9c4a4112`
-- **Final HEAD:** local documentation correction commits (no push/tag/release)
-- **Working Tree:** clean before this retry
+- **Final HEAD:** `6f287c89561b949b3e17ee10ab4291241b19647c`
+- **Working Tree:** clean after this retry (no push/tag/release)
 - **Scope:** M2A.1 retrieval validation only. M2B, LangGraph, Agentic RAG, MCP, and LLM generation are not authorized.
 - **Qdrant:** live `m2a1-qdrant`, image `qdrant/qdrant:v1.12.5`, healthy on `localhost:6333`; persistent Docker volume `m2a1_qdrant_data` mounted at `/qdrant/storage`. Integration lifecycle passed against the real instance.
 - **Dataset:** `datasets/m2a-retrieval-v2.json`, 40 cases, ten categories. Recalculated SHA-256: `eec5a26d8285c70daaf228c709f8f041ef693df503abbbca424f0f25dc2491cb`; unchanged.
@@ -28,8 +28,7 @@
 
 ## Artifacts
 
-- `artifacts/benchmarks/m2a1-semantic-retrieval.json`
-- `artifacts/benchmarks/latest.json`
+- Historical `artifacts/benchmarks/m2a1-semantic-retrieval.json` and `artifacts/benchmarks/latest.json` remain preserved; no R1 semantic artifact was generated.
 - `datasets/m2a-retrieval-v2.json`
 - `docs/ADR-002-SEMANTIC-EMBEDDING.md`
 - `docs/ADR-003-CONTROL-1-SELECTION.md`
