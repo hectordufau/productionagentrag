@@ -51,6 +51,8 @@ class QdrantClient:
                 try:
                     return json.loads(raw.decode("utf-8"))
                 except json.JSONDecodeError as exc:
+                    if method == "GET" and path == "/healthz" and response.status == 200:
+                        return {"status": raw.decode("utf-8", "replace")}
                     raise QdrantHTTPError(
                         response.status, raw.decode("utf-8", "replace"), method, path
                     ) from exc

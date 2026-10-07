@@ -36,9 +36,9 @@ make evaluate-retrieval
 make benchmark-retrieval
 ```
 
-The benchmark consumes the versioned eight-case dataset in `datasets/m2a-retrieval-v1.json` and writes `artifacts/benchmarks/m2a-retrieval-v1.json`. It records commit, dataset, embedding, strategy, reranker, configuration, and timestamp metadata plus lexical/vector/hybrid/hybrid+rereanking metrics. `docs/RETRIEVAL-EVALUATION.md` defines the metrics and controls; `docs/RETRIEVAL-BENCHMARK.md` defines reproduction and artifact requirements.
+The M2A.1 benchmark consumes the frozen 40-case dataset in `datasets/m2a-retrieval-v2.json` and writes `artifacts/benchmarks/m2a1-semantic-retrieval.json` plus `latest.json`. It records dataset checksum, model metadata, category metrics, timing, and resource details. Install `.[semantic]` for the local Apache-2.0 sentence-transformers provider; `--provider hash` remains the offline control.
 
-Qdrant is optional for the offline benchmark. `docker compose up --build` provisions it, while `/v1/retrieval/qdrant-health` returns HTTP 503 when it cannot be reached. The adapter's live behavior is covered by mocked HTTP unit tests; no live Qdrant claim is made here.
+Qdrant is provisioned by `docker compose`; `/v1/retrieval/qdrant-health` returns HTTP 503 when unavailable. Live lifecycle coverage is isolated in `tests/integration/qdrant` and is run with `make test-integration` against the Qdrant volume.
 
 ## Scope
 

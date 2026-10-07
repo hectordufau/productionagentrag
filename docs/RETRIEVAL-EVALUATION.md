@@ -15,3 +15,9 @@ The four required strategies are lexical M1 control, deterministic local vector 
 ## Gates and interpretation
 
 G1-G4 and G7-G8 remain M1 acceptance gates. M2A maps G5A to vector retrieval, G5B to hybrid retrieval, G5C to reproducible evaluation, G5 to the composite of G5A-G5C, and G6 to reranking. G9-G20 are pending scope, not inferred from local results.
+
+## M2A.1 semantic validation
+
+The frozen `datasets/m2a-retrieval-v2.json` contains 40 explicit cases across ten categories. The matrix is lexical, semantic vector, semantic RRF hybrid, and semantic RRF plus deterministic reranking. `SentenceTransformerEmbedding` uses all-MiniLM-L6-v2 (384, normalized, cosine); `DeterministicHashEmbedding` remains the offline control. Artifacts report global/category Precision, Recall, HitRate, MRR, NDCG, mean/p50/p95 latency, indexing timing, and runtime metadata.
+
+Live Qdrant checks are isolated under `tests/integration/qdrant`; they require the service unless explicitly disabled with `QDRANT_EXPLICITLY_UNAVAILABLE=1`. The FastAPI/httpx warning is an upstream Starlette TestClient deprecation recommending `httpx2`; dependencies were not changed arbitrarily. G5D/G5F are evidence-bound, G5G CONTROL-1 is INSUFFICIENT EVIDENCE, and M2B is not authorized.
