@@ -1,47 +1,68 @@
 {
-  "benchmark_version": "m2a-v1",
-  "embedding": "deterministic-hash",
-  "reranker": "deterministic-overlap",
+  "benchmark_version": "m2a-retrieval-v1.1",
+  "configuration": {
+    "distance": "cosine",
+    "metadata_filter": "exact-match",
+    "network": false,
+    "seed": "sha256-feature-hash"
+  },
+  "dataset_count": 8,
+  "dataset_version": "m2a-retrieval-v1.1",
+  "embedding": {
+    "dimension": 128,
+    "model": "deterministic-hash",
+    "provider": "local",
+    "version": "1"
+  },
+  "git_commit": "87e606ee946c225555d411a4ae524f680b91a86d",
   "results": {
     "hybrid": {
-      "hit_rate": 1.0,
-      "latency_ms_mean": 0.121859,
-      "latency_ms_p95": 0.195587,
-      "mrr": 0.777778,
-      "ndcg": 0.833333,
-      "precision": 0.333333,
-      "queries": 3,
-      "recall": 1.0
+      "hit_rate": 0.875,
+      "latency_ms_mean": 0.095315,
+      "latency_ms_p95": 0.120629,
+      "mrr": 0.875,
+      "ndcg": 0.864965,
+      "precision": 0.25,
+      "queries": 8,
+      "recall": 0.875
     },
     "hybrid+reranking": {
-      "hit_rate": 1.0,
-      "latency_ms_mean": 0.116293,
-      "latency_ms_p95": 0.173454,
-      "mrr": 0.777778,
-      "ndcg": 0.833333,
-      "precision": 0.333333,
-      "queries": 3,
-      "recall": 1.0
+      "hit_rate": 0.875,
+      "latency_ms_mean": 0.168601,
+      "latency_ms_p95": 0.300341,
+      "mrr": 0.875,
+      "ndcg": 0.875,
+      "precision": 0.25,
+      "queries": 8,
+      "recall": 0.875
     },
     "lexical": {
-      "hit_rate": 0.666667,
-      "latency_ms_mean": 0.016081,
-      "latency_ms_p95": 0.019282,
-      "mrr": 0.666667,
-      "ndcg": 0.666667,
-      "precision": 0.666667,
-      "queries": 3,
-      "recall": 0.666667
+      "hit_rate": 0.875,
+      "latency_ms_mean": 0.012865,
+      "latency_ms_p95": 0.030495,
+      "mrr": 0.875,
+      "ndcg": 0.816608,
+      "precision": 0.5625,
+      "queries": 8,
+      "recall": 0.8125
     },
     "vector": {
-      "hit_rate": 1.0,
-      "latency_ms_mean": 0.072191,
-      "latency_ms_p95": 0.104409,
-      "mrr": 0.777778,
-      "ndcg": 0.833333,
-      "precision": 0.333333,
-      "queries": 3,
-      "recall": 1.0
+      "hit_rate": 0.875,
+      "latency_ms_mean": 0.057177,
+      "latency_ms_p95": 0.073262,
+      "mrr": 0.875,
+      "ndcg": 0.875,
+      "precision": 0.25,
+      "queries": 8,
+      "recall": 0.875
     }
-  }
+  },
+  "strategy": {
+    "candidate_k": 10,
+    "final_k": 5,
+    "fusion": "reciprocal_rank_fusion(k=60)",
+    "reranker_model": "deterministic-overlap",
+    "reranker_provider": "local"
+  },
+  "timestamp": "2026-10-07T18:30:57.646763+00:00"
 }

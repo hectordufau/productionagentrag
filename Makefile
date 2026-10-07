@@ -18,5 +18,11 @@ lint:
 format:
 	ruff format .
 
-benchmark:
+evaluate-retrieval:
+	$(PYTHON) -m pytest tests/unit/test_m2a_retrieval.py tests/unit/test_qdrant.py -q
 	$(PYTHON) scripts/run_benchmark.py
+
+benchmark-retrieval:
+	$(PYTHON) scripts/run_benchmark.py
+
+benchmark: benchmark-retrieval

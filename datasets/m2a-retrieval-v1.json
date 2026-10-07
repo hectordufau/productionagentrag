@@ -1,9 +1,15 @@
 {
-  "dataset_version": "m2a-v1",
-  "description": "Small deterministic retrieval control set; relevance is chunk-id based.",
+  "dataset_version": "m2a-retrieval-v1.1",
+  "description": "Versioned deterministic control set with relevance by chunk id.",
+  "query_count": 8,
   "cases": [
-    {"query": "vector storage", "relevant_chunk_ids": ["chunk-qdrant"]},
-    {"query": "metadata database", "relevant_chunk_ids": ["chunk-postgres"]},
-    {"query": "document checksum", "relevant_chunk_ids": ["chunk-checksum"]}
+    {"id": "q01", "type": "exact", "query": "Qdrant vector database", "relevant_chunk_ids": ["chunk-qdrant"]},
+    {"id": "q02", "type": "paraphrase", "query": "where are relational records kept", "relevant_chunk_ids": ["chunk-postgres"]},
+    {"id": "q03", "type": "ambiguous", "query": "identity", "relevant_chunk_ids": ["chunk-checksum", "chunk-identity"]},
+    {"id": "q04", "type": "multi-term", "query": "chunking checksums deterministic ingestion", "relevant_chunk_ids": ["chunk-checksum", "chunk-ingestion"]},
+    {"id": "q05", "type": "similar-docs", "query": "vector search retrieval index", "relevant_chunk_ids": ["chunk-qdrant", "chunk-search"]},
+    {"id": "q06", "type": "exact", "query": "metadata filters", "relevant_chunk_ids": ["chunk-metadata"]},
+    {"id": "q07", "type": "paraphrase", "query": "documents have stable content fingerprints", "relevant_chunk_ids": ["chunk-checksum"]},
+    {"id": "q08", "type": "no-answer", "query": "quantum banana orchestration", "relevant_chunk_ids": []}
   ]
 }
