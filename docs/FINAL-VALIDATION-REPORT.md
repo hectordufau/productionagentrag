@@ -4,8 +4,8 @@
 
 - **Repository:** `productionagentrag`
 - **Branch:** `main`
-- **Candidate commit:** `3436b9567dfdfe0797a783307db773a9329c1548`
-- **Working tree:** clean at candidate commit before this report update; report update is the final documentation change
+- **Candidate implementation commit:** `b324261a654ab853a46c3e843b5c404c6986e8fb`
+- **Working tree:** clean after independent verification; this report records the implementation commit before any later report-only change
 - **Release state:** PRE-v1.0; no tag, release, or push
 - **Scope:** M1 plus M2A retrieval engineering only. M2B, LangGraph, MCP, LLM generation, and live-production persistence remain out of scope.
 
