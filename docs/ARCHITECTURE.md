@@ -1,29 +1,19 @@
 # Architecture
 
-## Scope
+## Baseline RAG + LLM scope
 
-This repository starts with a deterministic local baseline so later agentic behavior can be compared against a stable control.
+The pipeline is deliberately non-agentic: ingest, chunk, retrieve, evidence gate, bounded context construction, generate, validate citations and validate grounding. Retrieval is provider-independent: lexical CONTROL-0, deterministic vector, Hybrid RRF and optional reranking. Generation is an explicit `LLMProvider`; the shipped real provider is local Ollama.
 
-## Functional requirements
+Documents and retrieved chunks are untrusted data. The grounded prompt prevents document text from becoming instructions. `INSUFFICIENT_CONTEXT` is decided from retrieval evidence before generation. Provider unavailable and timeout failures are explicit and never become deterministic fake answers.
 
-1. Ingest supported text documents with immutable checksum identity.
-2. Chunk documents deterministically.
-3. Retrieve relevant chunks with bounded top-k.
-4. Return grounded answers with citation identifiers.
-5. Expose health, readiness and version API endpoints.
+## Data preservation and output
 
-## Non-functional requirements
+Document identity is SHA-256. Chunks preserve `document_id`, `chunk_id`, `source`, `filename`, and metadata. ContextBuilder deduplicates by chunk ID, preserves retrieval order, and bounds words/tokens. API responses include `status`, `answer`, `citations`, `retrieval`, `generation`, `grounding`, `latency`, and `trace_id`; prompts and raw provider internals are not returned.
 
-Provider-independent local execution, explicit configuration, bounded work, testability, structured errors and evidence-driven claims.
+## Model and reproducibility
 
-## Non-goals for M1
+The selected local model is `aratan/Agents-A1-4B-Q4_K_M-GGUF:Q4_K_M`, already available in Ollama. It is a 4.2B Q4 GGUF chosen for local CPU/RAM feasibility and reproducibility. License/redistribution remains subject to the model card; this repository makes no commercial-provider claim. Run `ollama list`, then `uvicorn agentic_rag.api.app:app --reload` and `pytest -q`.
 
-No claim of production Qdrant/PostgreSQL persistence, semantic embeddings, reranking, LangGraph orchestration, MCP transport or OpenTelemetry completeness. Those are later milestone deliverables.
+## Explicit non-goals
 
-## Threat model
-
-Documents and retrieved chunks are untrusted data. The system must not treat document text as system instructions. Inputs are size/type validated, filesystem paths are not accepted by the HTTP ingestion endpoint, and unsupported content is rejected.
-
-## Acceptance criteria
-
-G1 architecture documented; G2 reproducible environment; G3 deterministic ingestion; G4 retrieval functional; G7 baseline RAG functional; G8 citation objects returned; tests green. G5/G6/G9-G20 remain pending until implemented and verified.
+No LangGraph, MCP, agent/tool routing, memory, observability phase, deployment, commercial API requirement, or M2B work is included. Semantic retrieval remains the existing configured deterministic/local baseline, not a claim of learned embedding quality.

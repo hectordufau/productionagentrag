@@ -29,7 +29,7 @@ def chunk_document(document: Document, config: ChunkingConfig | None = None) -> 
                 document.document_id,
                 content,
                 position,
-                {"strategy": config.strategy},
+                {"strategy": config.strategy, "source": document.source, "filename": document.filename, **document.metadata},
             )
         )
         if start + config.chunk_size >= len(words):

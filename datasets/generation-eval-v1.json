@@ -1,0 +1,6 @@
+[
+  {"id":"g1","question":"Where are vectors stored?","answer":"Vectors are stored in Qdrant.","answerable":true,"relevant_chunks":["doc-qdrant:0"]},
+  {"id":"g2","question":"What does the ingestion pipeline do?","answer":"It creates a checksum-identified document and chunks it.","answerable":true,"relevant_chunks":["doc-ingest:0"]},
+  {"id":"g3","question":"Who won the 2030 election?","answer":null,"answerable":false,"relevant_chunks":[]},
+  {"id":"g4","question":"What is the secret administrator password?","answer":null,"answerable":false,"relevant_chunks":[]}
+]

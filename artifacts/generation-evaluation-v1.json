@@ -1,0 +1,157 @@
+{
+  "dataset": {
+    "path": "datasets/generation-eval-v1.json",
+    "count": 4,
+    "answerable": 2,
+    "unanswerable": 2
+  },
+  "model": "aratan/Agents-A1-4B-Q4_K_M-GGUF:Q4_K_M",
+  "provider": "ollama",
+  "strategies": [
+    {
+      "strategy": "hybrid+llm",
+      "cases": [
+        {
+          "id": "g1",
+          "metrics": null,
+          "status": "PROVIDER_ERROR",
+          "error": "Ollama unavailable at http://127.0.0.1:11434: HTTP Error 500: Internal Server Error",
+          "retrieved_chunks": [
+            "b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0",
+            "35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0"
+          ],
+          "latency_ms": {
+            "retrieval": 0.6102949992055073,
+            "generation": 16819.5572409968,
+            "total": 16820.167535996006
+          }
+        },
+        {
+          "id": "g2",
+          "metrics": null,
+          "status": "PROVIDER_ERROR",
+          "error": "Ollama unavailable at http://127.0.0.1:11434: Remote end closed connection without response",
+          "retrieved_chunks": [
+            "35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0",
+            "b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0"
+          ],
+          "latency_ms": {
+            "retrieval": 3.4997239999938756,
+            "generation": 15667.126843000005,
+            "total": 15670.626567
+          }
+        },
+        {
+          "id": "g3",
+          "metrics": null,
+          "status": "PROVIDER_ERROR",
+          "error": "Ollama unavailable at http://127.0.0.1:11434: <urlopen error [Errno 111] Connection refused>",
+          "retrieved_chunks": [
+            "35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0",
+            "b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0"
+          ],
+          "latency_ms": {
+            "retrieval": 14.184823005052749,
+            "generation": 70.17108299623942,
+            "total": 84.35590600129217
+          }
+        },
+        {
+          "id": "g4",
+          "metrics": null,
+          "status": "PROVIDER_ERROR",
+          "error": "Ollama unavailable at http://127.0.0.1:11434: <urlopen error [Errno 111] Connection refused>",
+          "retrieved_chunks": [
+            "35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0",
+            "b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0"
+          ],
+          "latency_ms": {
+            "retrieval": 0.14865800039842725,
+            "generation": 0.3114020000793971,
+            "total": 0.46006000047782436
+          }
+        }
+      ],
+      "metrics": null,
+      "latency_ms": {
+        "retrieval": 4.61087500116264,
+        "generation": 8139.291642248281,
+        "total": 8143.902517249444
+      }
+    },
+    {
+      "strategy": "vector-semantic+llm",
+      "cases": [
+        {
+          "id": "g1",
+          "metrics": null,
+          "status": "PROVIDER_ERROR",
+          "error": "Ollama unavailable at http://127.0.0.1:11434: <urlopen error [Errno 111] Connection refused>",
+          "retrieved_chunks": [
+            "b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0",
+            "35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0"
+          ],
+          "latency_ms": {
+            "retrieval": 26.181523004197516,
+            "generation": 0.39805399865144864,
+            "total": 26.579577002848964
+          }
+        },
+        {
+          "id": "g2",
+          "metrics": null,
+          "status": "PROVIDER_ERROR",
+          "error": "Ollama unavailable at http://127.0.0.1:11434: <urlopen error [Errno 111] Connection refused>",
+          "retrieved_chunks": [
+            "35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0",
+            "b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0"
+          ],
+          "latency_ms": {
+            "retrieval": 31.634719998692162,
+            "generation": 0.5037079972680658,
+            "total": 32.13842799596023
+          }
+        },
+        {
+          "id": "g3",
+          "metrics": null,
+          "status": "PROVIDER_ERROR",
+          "error": "Ollama unavailable at http://127.0.0.1:11434: <urlopen error [Errno 111] Connection refused>",
+          "retrieved_chunks": [
+            "b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0",
+            "35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0"
+          ],
+          "latency_ms": {
+            "retrieval": 22.906843994860537,
+            "generation": 0.31046100048115477,
+            "total": 23.217304995341692
+          }
+        },
+        {
+          "id": "g4",
+          "metrics": null,
+          "status": "PROVIDER_ERROR",
+          "error": "Ollama unavailable at http://127.0.0.1:11434: <urlopen error [Errno 111] Connection refused>",
+          "retrieved_chunks": [
+            "b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0",
+            "35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0"
+          ],
+          "latency_ms": {
+            "retrieval": 19.09273799537914,
+            "generation": 0.4907750044367276,
+            "total": 19.583512999815866
+          }
+        }
+      ],
+      "metrics": null,
+      "latency_ms": {
+        "retrieval": 24.95395624828234,
+        "generation": 0.4257495002093492,
+        "total": 25.379705748491688
+      }
+    }
+  ],
+  "limitations": [
+    "Ollama generation was attempted for every case but the local provider returned errors; metrics are null and were not fabricated."
+  ]
+}

@@ -1,6 +1,14 @@
 # Production Agentic RAG
 
-A provider-independent reference implementation for a production-oriented RAG baseline. The repository is deliberately deterministic and offline-friendly: M1 provides ingestion, chunking, lexical retrieval, grounded citations, and fail-closed answers; M2A adds local vector, hybrid, reranking, evaluation, and an optional Qdrant HTTP adapter.
+A provider-independent reference implementation for a production-oriented RAG baseline. M1 provides ingestion, chunking, lexical retrieval, grounded citations, and fail-closed answers; M2A adds local vector, hybrid, reranking, evaluation, and an optional Qdrant HTTP adapter; Baseline RAG + LLM adds real local Ollama generation, context budgets, citation validation and grounding checks. See `docs/RAG-PIPELINE.md` and `docs/GENERATION.md`.
+
+`pytest -q` and `ruff check src tests scripts` are the local gates. The reproducible generation comparison is:
+
+```bash
+PYTHONPATH=src .venv-semantic-cpu/bin/python scripts/run_generation_evaluation.py
+```
+
+The checked-in evaluation artifact records the latest real-provider attempt. On 2026-10-07 the dataset had 4 cases (2 answerable, 2 unanswerable); the configured Ollama model was attempted for both strategies, but provider errors made both metric blocks null. The latest evaluation is documented in `docs/GENERATION.md`; rerun it after restoring Ollama availability.
 
 ## Quickstart (M1 control)
 
