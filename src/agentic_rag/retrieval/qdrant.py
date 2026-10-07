@@ -159,3 +159,16 @@ class QdrantClient:
     ) -> dict[str, Any]:
         """Replace point vectors and payloads; Qdrant upsert is the update strategy."""
         return self.upsert_vectors(collection, points, wait)
+
+    # Short aliases mirror the REST concepts for simple adapter callers.
+    def upsert(self, collection: str, points: Iterable[dict[str, Any]], wait: bool = True) -> dict[str, Any]:
+        return self.upsert_vectors(collection, points, wait)
+
+    def search(self, collection: str, vector: list[float], limit: int = 5, query_filter: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+        return self.search_vectors(collection, vector, limit, query_filter)
+
+    def delete(self, collection: str, point_ids: Iterable[str | int], wait: bool = True) -> dict[str, Any]:
+        return self.delete_vectors(collection, point_ids, wait)
+
+    def update(self, collection: str, points: Iterable[dict[str, Any]], wait: bool = True) -> dict[str, Any]:
+        return self.update_vectors(collection, points, wait)
