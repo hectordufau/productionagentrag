@@ -16,8 +16,8 @@ The four required strategies are lexical M1 control, deterministic local vector 
 
 G1-G4 and G7-G8 remain M1 acceptance gates. M2A maps G5A to vector retrieval, G5B to hybrid retrieval, G5C to reproducible evaluation, G5 to the composite of G5A-G5C, and G6 to reranking. G9-G20 are pending scope, not inferred from local results.
 
-## M2A.1 semantic validation
+## M2A.1-R1 semantic validation retry
 
-The frozen `datasets/m2a-retrieval-v2.json` contains 40 explicit cases across ten categories. The matrix is lexical, semantic vector, semantic RRF hybrid, and semantic RRF plus deterministic reranking. `SentenceTransformerEmbedding` uses all-MiniLM-L6-v2 (384, normalized, cosine); `DeterministicHashEmbedding` remains the offline control. Artifacts report global/category Precision, Recall, HitRate, MRR, NDCG, mean/p50/p95 latency, indexing timing, and runtime metadata.
+The frozen `datasets/m2a-retrieval-v2.json` contains 40 explicit cases across ten categories and recalculates to SHA-256 `eec5a26d8285c70daaf228c709f8f041ef693df503abbbca424f0f25dc2491cb`. R1 froze candidate-k=10, final-k=5, RRF-k=60, `sentence-transformers/all-MiniLM-L6-v2`, 384 dimensions, normalized embeddings, cosine distance, and deterministic overlap reranking before execution. The existing optional dependency installation was attempted with a long timeout but stalled downloading the resolved Torch/CUDA stack; the packages were not installed and the model never executed. Therefore the semantic smoke test, R1 matrix, and R1 artifact were not produced. The prior hash-provider artifact is historical evidence only.
 
-Live Qdrant checks are isolated under `tests/integration/qdrant`; they require the service unless explicitly disabled with `QDRANT_EXPLICITLY_UNAVAILABLE=1`. The FastAPI/httpx warning is an upstream Starlette TestClient deprecation recommending `httpx2`; dependencies were not changed arbitrarily. G5D/G5F are evidence-bound, G5G CONTROL-1 is INSUFFICIENT EVIDENCE, and M2B is not authorized.
+Live Qdrant checks are isolated under `tests/integration/qdrant`; they require the service unless explicitly disabled with `QDRANT_EXPLICITLY_UNAVAILABLE=1`. The FastAPI/httpx warning is an upstream Starlette TestClient deprecation recommending `httpx2`; dependencies were not changed arbitrarily. G5D is PASS; G5F and G5G are INSUFFICIENT EVIDENCE. M2B is not authorized.

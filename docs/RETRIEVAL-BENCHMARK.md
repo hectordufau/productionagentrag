@@ -22,3 +22,7 @@ The JSON artifact records `git_commit`, dataset version/count, embedding provide
 ## Limits
 
 This is an offline control benchmark, not a claim of semantic-model quality or live Qdrant availability. Latency is local process latency and is not a production capacity estimate. A live Qdrant deployment requires the optional compose service and separate integration evidence.
+
+## M2A.1-R1 retry status
+
+The R1 semantic retry is blocked before benchmark execution. The exact existing `.[semantic]` dependency was attempted with a long timeout, but resolution proceeded to a 554.6 MB Torch wheel and then a 553.1 MB CUDA/cuDNN wheel without completing. No versions were changed, no model replacement was used, and no deterministic-hash fallback was accepted as semantic evidence. The frozen dataset checksum remained `eec5a26d8285c70daaf228c709f8f041ef693df503abbbca424f0f25dc2491cb`. The R1 artifact is intentionally absent; the historical artifact is preserved. M2B remains unauthorized.

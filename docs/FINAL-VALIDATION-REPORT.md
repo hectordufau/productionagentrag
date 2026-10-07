@@ -5,14 +5,14 @@
 - **Repository:** `/home/hector/workspace/productionagentrag`
 - **Branch:** `main`
 - **Candidate Commit SHA:** `193e38e31973fe5e4965ca92673eb3bd9c4a4112`
-- **Final HEAD:** verified implementation commit above; report-only corrections may follow
-- **Working Tree:** clean at verification time
+- **Final HEAD:** report correction commit follows this retry
+- **Working Tree:** clean before this retry
 - **Scope:** M2A.1 retrieval validation only. M2B, LangGraph, Agentic RAG, MCP, and LLM generation are not authorized.
 - **Qdrant:** live `m2a1-qdrant`, image `qdrant/qdrant:v1.12.5`, healthy on `localhost:6333`; persistent Docker volume `m2a1_qdrant_data` mounted at `/qdrant/storage`. Integration lifecycle passed against the real instance.
-- **Dataset:** `datasets/m2a-retrieval-v2.json`, 40 cases, ten categories, checksum recorded in `artifacts/benchmarks/m2a1-semantic-retrieval.json`.
-- **Semantic provider:** implementation is `sentence-transformers/all-MiniLM-L6-v2`, Apache-2.0, 384 dimensions, normalized, cosine, local CPU/optional device. The runtime package/model download could not complete within this environment's installation timeout; the accepted run therefore used the deterministic hash provider and records G5F as INSUFFICIENT EVIDENCE rather than claiming semantic execution.
+- **Dataset:** `datasets/m2a-retrieval-v2.json`, 40 cases, ten categories. Recalculated SHA-256: `eec5a26d8285c70daaf228c709f8f041ef693df503abbbca424f0f25dc2491cb`; unchanged.
+- **Semantic provider:** implementation is `sentence-transformers/all-MiniLM-L6-v2`, Apache-2.0, 384 dimensions, normalized, cosine, local CPU/optional device. R1 installation retry was stopped after approximately 13 minutes: the existing optional dependency resolved `torch-2.14.1` and then attempted multi-hundred-MB CUDA wheels (including `nvidia_cudnn_cu13`), with no completed install. `sentence-transformers`, `torch`, `transformers`, and `qdrant-client` remain unavailable. No semantic model executed.
 - **Control:** deterministic SHA-256 hash embedding remains available offline/test provider.
-- **Matrix:** lexical, vector semantic, hybrid semantic RRF, hybrid semantic RRF plus deterministic reranking. Artifact includes global/category Precision, Recall, HitRate, MRR, NDCG, mean/p50/p95 query latency, indexing time, memory/runtime metadata.
+- **Matrix:** R1 semantic matrix was not run because installation failed; no R1 artifact was created or overwrote. The historical hash-provider artifact remains preserved.
 
 ## Tests and gates
 
@@ -22,9 +22,9 @@
 - Compose config: passed.
 - G5D dataset/schema/checksum: PASS.
 - G5E real Qdrant: PASS (live evidence above).
-- G5F semantic model/matrix: INSUFFICIENT EVIDENCE (dependency installation timed out; no silent fallback).
-- G5G CONTROL-1: INSUFFICIENT EVIDENCE; no recommendation.
-- M2B authorization: **NOT AUTHORIZED**
+- G5F semantic model/matrix: INSUFFICIENT EVIDENCE (optional stack installation did not complete; no silent fallback).
+- **G5G CONTROL-1: INSUFFICIENT EVIDENCE; no recommendation.**
+- **M2B authorization: NOT AUTHORIZED**
 
 ## Artifacts
 
@@ -35,4 +35,6 @@
 - `docs/ADR-003-CONTROL-1-SELECTION.md`
 - `tests/integration/qdrant/test_qdrant_live.py`
 
-No secrets were added, and no push/tag/release was performed.
+No secrets were added, and no push/tag/release was performed. The retry was blocked before semantic execution; M2B remains unauthorized.
+
+M2B_NOT_AUTHORIZED
