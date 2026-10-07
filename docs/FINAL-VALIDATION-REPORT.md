@@ -28,10 +28,14 @@
 - G5D dataset/schema/checksum: PASS.
 - G5E real Qdrant: PASS.
 - G5F semantic model/matrix: PASS.
-- G5G CONTROL-1: PASS; no fallback provider used.
+- G5G CONTROL-1: PASS; provisional recommendation is hybrid semantic RRF without reranking, medium confidence.
 
 ## Artifacts and authorization
 
-Modified `scripts/run_benchmark.py`, `docs/RETRIEVAL-BENCHMARK.md`, and this report; generated `artifacts/benchmarks/m2a1-r2-semantic-retrieval.json` and updated `latest.json`. No dataset, model, architecture, or historical artifact was changed. No push/tag/release performed.
+## CONTROL-1 decision
+
+Provisional recommendation: **hybrid semantic RRF without reranking** (`candidate_k=10`, `final_k=5`, `RRF k=60`, normalized 384-D `all-MiniLM-L6-v2`, cosine, Qdrant). Vector semantic had the highest quality (Recall 0.900, NDCG 0.860), but hybrid was close (Recall 0.892, NDCG 0.836) with lower mean latency (15.45 ms versus 19.80 ms) and lower complexity than adding the deterministic reranker. Lexical remains the fastest control (0.010 ms) but had lower Recall 0.704 and NDCG 0.694. Confidence: **MEDIUM**, because the dataset has 40 cases and local CPU latency is not production capacity evidence.
+
+Modified `scripts/run_benchmark.py`, `docs/RETRIEVAL-BENCHMARK.md`, ADR-003, and this report; generated `artifacts/benchmarks/m2a1-r2-semantic-retrieval.json` and updated `latest.json`. No dataset, model, architecture, or historical artifact was changed. No push/tag/release performed.
 
 M2B_NOT_AUTHORIZED
