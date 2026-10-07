@@ -30,6 +30,7 @@
     "provider": "sentence-transformers",
     "revision": "main"
   },
+  "final_head": "97bb3eb",
   "gates": {
     "G5D_dataset": "PASS",
     "G5E_real_qdrant": "PASS",

@@ -3,7 +3,10 @@
 ## M2A.1-R2 final format
 
 - **Repository:** `/home/hector/workspace/productionagentrag`
-- **Baseline:** `3cbb115b660d18a5572014c4a73f691db9cf3630`
+- **Branch:** `main`
+- **Implementation Commit:** `f089800f84bd505294e54c6f6468a1a5e9cbb470`
+- **Final HEAD:** `97bb3eb` at benchmark verification; documentation/artifact provenance corrections follow
+- **Working Tree:** clean before these report corrections
 - **Scope:** semantic retrieval validation only; no M2B, LangGraph, agentic generation, MCP, or feature work.
 - **Environment:** isolated `.venv-semantic-cpu` (ignored), Python 3.14.7, pip 26.2.1, Ubuntu x86_64.
 - **CPU/no-CUDA evidence:** `torch==2.14.1+cpu`; `torch.cuda.is_available()==False`; no `nvidia-*`, `cuda-*`, or `triton` distributions.
@@ -13,7 +16,7 @@
 - **Dataset:** 40 cases; SHA-256 `eec5a26d8285c70daaf228c709f8f041ef693df503abbbca424f0f25dc2491cb`; verified before benchmark.
 - **Frozen configuration:** candidate_k=10, final_k=5, RRF k=60, model/dim/normalization/distance/reranker unchanged.
 - **Qdrant:** live `m2a1-qdrant`, `qdrant/qdrant:v1.12.5`, localhost:6333. Separate collection `m2a1_r2_semantic_384`; 384-D semantic upsert/search/filter passed; fresh-client persistence passed (7 upserts, 5 search results, 2 filtered results).
-- **Benchmark:** artifact `artifacts/benchmarks/m2a1-semantic-retrieval.json`; `latest.json` updated while historical artifacts were preserved. Matrix includes lexical, vector semantic, hybrid semantic RRF, and hybrid+reranking. Five measured runs plus one warmup; global semantic vector hit-rate 0.900, recall 0.900, MRR 0.8625, nDCG 0.860144. Negative queries produced zero hits for all methods.
+- **Benchmark:** artifact `artifacts/benchmarks/m2a1-r2-semantic-retrieval.json`; `latest.json` updated while historical artifacts were preserved. Matrix includes lexical, vector semantic, hybrid semantic RRF, and hybrid+reranking. Five measured runs plus one warmup; global semantic vector hit-rate 0.900, recall 0.900, MRR 0.8625, nDCG 0.860144. Negative queries produced zero hits for all methods.
 
 ## Tests and gates
 
@@ -29,6 +32,6 @@
 
 ## Artifacts and authorization
 
-Modified `scripts/run_benchmark.py`, `docs/RETRIEVAL-BENCHMARK.md`, and this report; generated the new R2 benchmark artifact and updated `latest.json`. No dataset, model, architecture, or historical artifact was changed. No push/tag/release performed.
+Modified `scripts/run_benchmark.py`, `docs/RETRIEVAL-BENCHMARK.md`, and this report; generated `artifacts/benchmarks/m2a1-r2-semantic-retrieval.json` and updated `latest.json`. No dataset, model, architecture, or historical artifact was changed. No push/tag/release performed.
 
-AUTHORIZATION: M2B_NOT_AUTHORIZED
+M2B_NOT_AUTHORIZED
