@@ -1,39 +1,34 @@
 # FINAL-VALIDATION-REPORT
 
-## M2A.1 final format
+## M2A.1-R2 final format
 
 - **Repository:** `/home/hector/workspace/productionagentrag`
-- **Branch:** `main`
-- **Candidate Commit SHA:** `193e38e31973fe5e4965ca92673eb3bd9c4a4112`
-- **Final HEAD:** `6f287c89561b949b3e17ee10ab4291241b19647c`
-- **Working Tree:** clean after this retry (no push/tag/release)
-- **Scope:** M2A.1 retrieval validation only. M2B, LangGraph, Agentic RAG, MCP, and LLM generation are not authorized.
-- **Qdrant:** live `m2a1-qdrant`, image `qdrant/qdrant:v1.12.5`, healthy on `localhost:6333`; persistent Docker volume `m2a1_qdrant_data` mounted at `/qdrant/storage`. Integration lifecycle passed against the real instance.
-- **Dataset:** `datasets/m2a-retrieval-v2.json`, 40 cases, ten categories. Recalculated SHA-256: `eec5a26d8285c70daaf228c709f8f041ef693df503abbbca424f0f25dc2491cb`; unchanged.
-- **Semantic provider:** implementation is `sentence-transformers/all-MiniLM-L6-v2`, Apache-2.0, 384 dimensions, normalized, cosine, local CPU/optional device. R1 installation retry was stopped after approximately 13 minutes: the existing optional dependency resolved `torch-2.14.1` and then attempted multi-hundred-MB CUDA wheels (including `nvidia_cudnn_cu13`), with no completed install. `sentence-transformers`, `torch`, `transformers`, and `qdrant-client` remain unavailable. No semantic model executed.
-- **Control:** deterministic SHA-256 hash embedding remains available offline/test provider.
-- **Matrix:** R1 semantic matrix was not run because installation failed; no R1 artifact was created or overwrote. The historical hash-provider artifact remains preserved.
+- **Baseline:** `3cbb115b660d18a5572014c4a73f691db9cf3630`
+- **Scope:** semantic retrieval validation only; no M2B, LangGraph, agentic generation, MCP, or feature work.
+- **Environment:** isolated `.venv-semantic-cpu` (ignored), Python 3.14.7, pip 26.2.1, Ubuntu x86_64.
+- **CPU/no-CUDA evidence:** `torch==2.14.1+cpu`; `torch.cuda.is_available()==False`; no `nvidia-*`, `cuda-*`, or `triton` distributions.
+- **Dependencies:** sentence-transformers 3.4.1, transformers 4.57.6, qdrant-client 1.19.1.
+- **Model:** exactly `sentence-transformers/all-MiniLM-L6-v2`, Apache-2.0, 384 dimensions, L2-normalized, cosine distance, CPU; cache outside Git at `/home/hector/.cache/productionagentrag-hf`.
+- **Smoke:** PASS. Related similarity 0.482737; unrelated similarity 0.021246; finite normalized 384-D vectors; provider class `SentenceTransformerEmbedding` proves semantic rather than hash.
+- **Dataset:** 40 cases; SHA-256 `eec5a26d8285c70daaf228c709f8f041ef693df503abbbca424f0f25dc2491cb`; verified before benchmark.
+- **Frozen configuration:** candidate_k=10, final_k=5, RRF k=60, model/dim/normalization/distance/reranker unchanged.
+- **Qdrant:** live `m2a1-qdrant`, `qdrant/qdrant:v1.12.5`, localhost:6333. Separate collection `m2a1_r2_semantic_384`; 384-D semantic upsert/search/filter passed; fresh-client persistence passed (7 upserts, 5 search results, 2 filtered results).
+- **Benchmark:** artifact `artifacts/benchmarks/m2a1-semantic-retrieval.json`; `latest.json` updated while historical artifacts were preserved. Matrix includes lexical, vector semantic, hybrid semantic RRF, and hybrid+reranking. Five measured runs plus one warmup; global semantic vector hit-rate 0.900, recall 0.900, MRR 0.8625, nDCG 0.860144. Negative queries produced zero hits for all methods.
 
 ## Tests and gates
 
-- Full unit/API suite: **15 passed**, with the existing 13 preserved; one upstream FastAPI/Starlette/httpx deprecation warning was investigated and no arbitrary dependency change was made.
-- Real Qdrant integration: **2 passed**, covering health/readiness, collection create/validate, upsert/indexing, payloads, vector search, metadata filter, update, delete, fresh-client persistence, and unavailable behavior.
-- Ruff: passed after fixes.
-- Compose config: passed.
+- Unit/API suite: PASS (run separately).
+- Live Qdrant suite: PASS (run separately against localhost:6333).
+- Semantic smoke/benchmark: PASS.
+- Ruff: PASS.
+- Regression suite: PASS.
 - G5D dataset/schema/checksum: PASS.
-- G5E real Qdrant: PASS (live evidence above).
-- G5F semantic model/matrix: INSUFFICIENT EVIDENCE (optional stack installation did not complete; no silent fallback).
-- **G5G CONTROL-1: INSUFFICIENT EVIDENCE; no recommendation.**
-- **M2B authorization: NOT AUTHORIZED**
+- G5E real Qdrant: PASS.
+- G5F semantic model/matrix: PASS.
+- G5G CONTROL-1: PASS; no fallback provider used.
 
-## Artifacts
+## Artifacts and authorization
 
-- Historical `artifacts/benchmarks/m2a1-semantic-retrieval.json` and `artifacts/benchmarks/latest.json` remain preserved; no R1 semantic artifact was generated.
-- `datasets/m2a-retrieval-v2.json`
-- `docs/ADR-002-SEMANTIC-EMBEDDING.md`
-- `docs/ADR-003-CONTROL-1-SELECTION.md`
-- `tests/integration/qdrant/test_qdrant_live.py`
+Modified `scripts/run_benchmark.py`, `docs/RETRIEVAL-BENCHMARK.md`, and this report; generated the new R2 benchmark artifact and updated `latest.json`. No dataset, model, architecture, or historical artifact was changed. No push/tag/release performed.
 
-No secrets were added, and no push/tag/release was performed. The retry was blocked before semantic execution; M2B remains unauthorized.
-
-M2B_NOT_AUTHORIZED
+AUTHORIZATION: M2B_NOT_AUTHORIZED
