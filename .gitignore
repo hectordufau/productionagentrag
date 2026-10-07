@@ -6,5 +6,6 @@ __pycache__/
 .venv/
 .env
 *.db
+*.egg-info/
 artifacts/**/*.json
 !artifacts/**/.gitkeep
