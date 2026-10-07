@@ -30,7 +30,7 @@
     "G5F_semantic_matrix": "INSUFFICIENT EVIDENCE",
     "G5G_control1": "INSUFFICIENT EVIDENCE"
   },
-  "git_commit": "00df28a30ef2f840ff3244aac1256166651ef547",
+  "git_commit": "193e38e31973fe5e4965ca92673eb3bd9c4a4112",
   "qdrant": {
     "evidence": "live integration tests passed against localhost:6333, persistent volume m2a1_qdrant_data",
     "note": "live adapter covered by integration suite",
@@ -546,5 +546,5 @@
     "platform": "Linux-6.8.0-146-generic-x86_64-with-glibc2.39",
     "python": "3.14.7"
   },
-  "status": "validated"
+  "status": "validated_with_limitations"
 }

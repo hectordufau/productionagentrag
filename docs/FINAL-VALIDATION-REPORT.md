@@ -2,6 +2,11 @@
 
 ## M2A.1 final format
 
+- **Repository:** `/home/hector/workspace/productionagentrag`
+- **Branch:** `main`
+- **Candidate Commit SHA:** `193e38e31973fe5e4965ca92673eb3bd9c4a4112`
+- **Final HEAD:** verified implementation commit above; report-only corrections may follow
+- **Working Tree:** clean at verification time
 - **Scope:** M2A.1 retrieval validation only. M2B, LangGraph, Agentic RAG, MCP, and LLM generation are not authorized.
 - **Qdrant:** live `m2a1-qdrant`, image `qdrant/qdrant:v1.12.5`, healthy on `localhost:6333`; persistent Docker volume `m2a1_qdrant_data` mounted at `/qdrant/storage`. Integration lifecycle passed against the real instance.
 - **Dataset:** `datasets/m2a-retrieval-v2.json`, 40 cases, ten categories, checksum recorded in `artifacts/benchmarks/m2a1-semantic-retrieval.json`.
@@ -19,7 +24,7 @@
 - G5E real Qdrant: PASS (live evidence above).
 - G5F semantic model/matrix: INSUFFICIENT EVIDENCE (dependency installation timed out; no silent fallback).
 - G5G CONTROL-1: INSUFFICIENT EVIDENCE; no recommendation.
-- M2B authorization: **NO**.
+- M2B authorization: **NOT AUTHORIZED**
 
 ## Artifacts
 
