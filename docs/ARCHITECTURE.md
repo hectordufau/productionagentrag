@@ -12,7 +12,7 @@ Document identity is SHA-256. Chunks preserve `document_id`, `chunk_id`, `source
 
 ## Model and reproducibility
 
-The selected local model is `aratan/Agents-A1-4B-Q4_K_M-GGUF:Q4_K_M`, already available in Ollama. It is a 4.2B Q4 GGUF chosen for local CPU/RAM feasibility and reproducibility. License/redistribution remains subject to the model card; this repository makes no commercial-provider claim. Run `ollama list`, then `uvicorn agentic_rag.api.app:app --reload` and `pytest -q`.
+The selected local model is `qwen2.5:3b`, pulled from Ollama for this host's CPU/RAM profile. It is a small instruct model with a substantially smaller footprint than the previous 4B GGUF, while retaining practical grounded-answer capability. License/redistribution remains subject to the model card; this repository makes no commercial-provider claim. Run `ollama list`, then `uvicorn agentic_rag.api.app:app --reload` and `pytest -q`.
 
 ## Authorized Agentic RAG
 

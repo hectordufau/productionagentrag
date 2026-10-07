@@ -6,7 +6,7 @@ The project is an engineering reference, not a hosted service or a claim of mode
 
 - **Baseline RAG:** ingestion → deterministic chunking → lexical/vector/hybrid retrieval → bounded context → optional generation → citation/grounding validation.
 - **Agentic LangGraph:** deterministic analysis and routing, bounded rewrite/retry, optional in-process MCP metadata lookup, baseline generation, validation, metrics, and node-level decision traces.
-- **Local-first:** Ollama at `http://127.0.0.1:11434`, with the configured `aratan/Agents-A1-4B-Q4_K_M-GGUF:Q4_K_M` model.
+- **Local-first:** Ollama at `http://127.0.0.1:11434`, with the configured `qwen2.5:3b` model.
 - **MCP boundary:** official Python MCP SDK `mcp==2.3.0`; one allowlisted metadata tool that never returns document content.
 
 ## Navigation
@@ -187,11 +187,30 @@ The older eight-case offline control remains reproducible through `datasets/m2a-
 
 The run completed all four cases for both strategies. It is pipeline validation, not a statistically meaningful benchmark: four cases cannot establish superiority, Ollama output is model-dependent, lexical grounding is a practical signal rather than proof, and the semantic challenger requires the optional CPU sentence-transformers environment.
 
-Reproduce the evaluation with:
+Reproduce the historical v1 evaluation with:
 
 ```bash
 PYTHONPATH=src .venv-semantic-cpu/bin/python scripts/run_generation_evaluation.py
 ```
+
+### Generation evaluation v2: Baseline RAG vs Agentic RAG
+
+The final 30-case evaluation is frozen in `datasets/generation-eval-v2.json` (direct, paraphrase, ambiguous, multi-chunk, terminology, insufficient-context, metadata/tool, retrieval+MCP, and indirect-injection cases). It uses the same corpus and cases for both arms, deterministic fact/source/abstention scoring, and SHA-256 corpus `055d5a170e0b9862fd842c914558c3c2d3d204d31c96e2e935435a85a75bd885`. Both arms use Ollama `qwen2.5:3b`, timeout 120s, `num_ctx=2048`, `num_predict=256`, temperature `0`, and `think=false`; no LLM judge is used.
+
+| Strategy | Quality | Fact recall | Source precision / recall | Abstention accuracy | Mean latency | LLM calls | MCP calls |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Baseline (n=30) | 0.208333 | 0.250000 | 0.200000 / 0.200000 | 0.266667 | 8,286.843 ms | 30 | 0 |
+| Agentic (n=30) | 0.238333 | 0.310000 | 0.200000 / 0.200000 | 0.233333 | 7,921.985 ms | 26 | 4 |
+
+Agentic routing selected lexical 19 times, vector 4 times, and hybrid 7 times. Its retry and rewrite percentages were both 0% in this bounded run (`max_attempts=1` for the final comparable arm); MCP was used in 13.333% of cases. No provider errors occurred. The agentic arm improved fact recall by 0.060000 and quality by 0.030000, while abstention accuracy was 0.033334 lower. These results are corpus- and model-specific: they show bounded routing/tool behavior, not general model or strategy superiority. Generation is CPU-bound and the answer quality remains limited by retrieval and model citation behavior.
+
+Run it with:
+
+```bash
+PYTHONPATH=src .venv-semantic-cpu/bin/python scripts/run_baseline_vs_agentic_evaluation.py
+```
+
+The complete per-case, aggregate, category, latency, attempt/rewrite/call, strategy, and error record is checked in at `artifacts/benchmarks/baseline-vs-agentic-v2.json`.
 
 ## Security and failure boundaries
 
@@ -330,7 +349,7 @@ O projeto é uma referência de engenharia, não um serviço hospedado nem uma a
 
 - **Baseline RAG:** ingestão → chunking determinístico → recuperação lexical/vetorial/híbrida → contexto limitado → geração opcional → validação de citações/grounding.
 - **LangGraph agentic:** análise e roteamento determinísticos, reescrita/repetição limitada, consulta opcional a metadados via MCP em processo, geração baseline, validação, métricas e rastros de decisão por nó.
-- **Local-first:** Ollama em `http://127.0.0.1:11434`, com o modelo configurado `aratan/Agents-A1-4B-Q4_K_M-GGUF:Q4_K_M`.
+- **Local-first:** Ollama em `http://127.0.0.1:11434`, com o modelo configurado `qwen2.5:3b`.
 - **Limite MCP:** SDK Python oficial `mcp==2.3.0`; uma ferramenta permitida de metadados que nunca retorna o conteúdo dos documentos.
 
 ## Navegação
@@ -511,11 +530,30 @@ O controle offline anterior de oito casos continua reproduzível por `datasets/m
 
 A execução completou os quatro casos nas duas estratégias. É validação do pipeline, não benchmark estatisticamente significativo: quatro casos não estabelecem superioridade, a saída do Ollama depende do modelo, grounding lexical é um sinal prático e não uma prova, e o desafiante semântico requer o ambiente CPU opcional de sentence-transformers.
 
-Reproduza a avaliação com:
+Reproduza a avaliação histórica v1 com:
 
 ```bash
 PYTHONPATH=src .venv-semantic-cpu/bin/python scripts/run_generation_evaluation.py
 ```
+
+### Avaliação de geração v2: Baseline RAG vs Agentic RAG
+
+A avaliação final de 30 casos está congelada em `datasets/generation-eval-v2.json` (casos diretos, paráfrases, ambíguos, multi-chunk, terminologia, contexto insuficiente, metadata/tool, retrieval+MCP e injeção indireta). Os dois braços usam o mesmo corpus e casos, pontuação determinística de fatos/fontes/abstenção e SHA-256 do corpus `055d5a170e0b9862fd842c914558c3c2d3d204d31c96e2e935435a85a75bd885`. Ambos usam Ollama `qwen2.5:3b`, timeout de 120s, `num_ctx=2048`, `num_predict=256`, temperatura `0` e `think=false`; não há juiz LLM único.
+
+| Estratégia | Qualidade | Recall de fatos | Precisão / recall de fonte | Precisão de abstenção | Latência média | Chamadas LLM | Chamadas MCP |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Baseline (n=30) | 0.208333 | 0.250000 | 0.200000 / 0.200000 | 0.266667 | 8.286,843 ms | 30 | 0 |
+| Agentic (n=30) | 0.238333 | 0.310000 | 0.200000 / 0.200000 | 0.233333 | 7.921,985 ms | 26 | 4 |
+
+O roteamento agentic selecionou lexical 19 vezes, vector 4 vezes e hybrid 7 vezes. Os percentuais de retry e rewrite foram ambos 0% nesta execução limitada (`max_attempts=1` no braço comparável final); MCP foi usado em 13,333% dos casos. Não ocorreram erros do provedor. O braço agentic aumentou o recall de fatos em 0.060000 e a qualidade em 0.030000, mas teve precisão de abstenção 0.033334 menor. Os resultados são específicos do corpus e modelo: demonstram roteamento e ferramenta limitados, não superioridade geral. A geração é limitada pela CPU, pela recuperação e pelo comportamento de citações do modelo.
+
+Execute com:
+
+```bash
+PYTHONPATH=src .venv-semantic-cpu/bin/python scripts/run_baseline_vs_agentic_evaluation.py
+```
+
+O registro completo por caso, agregado, por categoria, latência, tentativas/rewrite/chamadas, estratégia e erros está em `artifacts/benchmarks/baseline-vs-agentic-v2.json`.
 
 ## Limites de segurança e falha
 

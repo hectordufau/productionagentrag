@@ -45,7 +45,7 @@ class OllamaProvider:
 
     provider = "ollama"
 
-    def __init__(self, model: str = "aratan/Agents-A1-4B-Q4_K_M-GGUF:Q4_K_M", base_url: str = "http://127.0.0.1:11434") -> None:
+    def __init__(self, model: str = "qwen2.5:3b", base_url: str = "http://127.0.0.1:11434") -> None:
         self.model, self.base_url = model, base_url.rstrip("/")
 
     def generate(self, prompt: str, *, timeout_s: float = 60.0) -> LLMResponse:

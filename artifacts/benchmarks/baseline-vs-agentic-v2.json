@@ -1,0 +1,2423 @@
+{
+  "version": "baseline-vs-agentic-v2",
+  "dataset": {
+    "path": "datasets/generation-eval-v2.json",
+    "sha256": "f5ee744084f846c1c68d0ab64d5ff2201ce7b9c8c525b02619b27661440c61a0",
+    "corpus_sha256": "055d5a170e0b9862fd842c914558c3c2d3d204d31c96e2e935435a85a75bd885",
+    "cases": 30
+  },
+  "provider": {
+    "name": "ollama",
+    "model": "qwen2.5:3b",
+    "timeout_s": 120,
+    "generation": {
+      "num_ctx": 2048,
+      "num_predict": 256,
+      "temperature": 0,
+      "think": false
+    }
+  },
+  "strategies": {
+    "baseline": {
+      "cases": [
+        {
+          "id": "v2-01",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0",
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.133,
+            "generation": 14048.508698004298,
+            "total": 14048.884
+          }
+        },
+        {
+          "id": "v2-02",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.169,
+            "generation": 662.757446996693,
+            "total": 663.083
+          }
+        },
+        {
+          "id": "v2-03",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.165,
+            "generation": 18197.71369999944,
+            "total": 18198.031
+          }
+        },
+        {
+          "id": "v2-04",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.185,
+            "generation": 651.5314450007281,
+            "total": 651.857
+          }
+        },
+        {
+          "id": "v2-05",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.167,
+            "generation": 21685.069113998907,
+            "total": 21685.387
+          }
+        },
+        {
+          "id": "v2-06",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0",
+            "d1bb5037f313e6278c8aff31327f41f3744b7a899c180d8b85650a16c0043489:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.247,
+            "generation": 19887.130716000684,
+            "total": 19887.563
+          }
+        },
+        {
+          "id": "v2-07",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.5,
+            "facts_hit": [
+              "INSUFFICIENT_CONTEXT"
+            ],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.25,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.235,
+            "generation": 871.8415850016754,
+            "total": 872.265
+          }
+        },
+        {
+          "id": "v2-08",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.285,
+            "generation": 5654.471078996721,
+            "total": 5654.968
+          }
+        },
+        {
+          "id": "v2-09",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "d1bb5037f313e6278c8aff31327f41f3744b7a899c180d8b85650a16c0043489:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.162,
+            "generation": 10932.741641998291,
+            "total": 10933.047
+          }
+        },
+        {
+          "id": "v2-10",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.154,
+            "generation": 19504.247714001394,
+            "total": 19504.57
+          }
+        },
+        {
+          "id": "v2-11",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0",
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.329,
+            "generation": 15713.950656005181,
+            "total": 15714.488
+          }
+        },
+        {
+          "id": "v2-12",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.307,
+            "generation": 774.9143729961361,
+            "total": 775.467
+          }
+        },
+        {
+          "id": "v2-13",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "d1bb5037f313e6278c8aff31327f41f3744b7a899c180d8b85650a16c0043489:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.34,
+            "generation": 926.8107080060872,
+            "total": 927.487
+          }
+        },
+        {
+          "id": "v2-14",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.335,
+            "generation": 901.0471510046045,
+            "total": 901.58
+          }
+        },
+        {
+          "id": "v2-15",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.165,
+            "generation": 652.1546469957684,
+            "total": 652.475
+          }
+        },
+        {
+          "id": "v2-16",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.167,
+            "generation": 20349.423628002114,
+            "total": 20349.746
+          }
+        },
+        {
+          "id": "v2-17",
+          "status": "OK",
+          "answer": "The metadata tool is named \"get_document_metadata\". Its metadata includes an allowlisted document identifier, filename, MIME type, source, and checksum, but does not return the document content. [chunk_id=65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0]",
+          "citations": [
+            {
+              "document_id": "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59",
+              "chunk_id": "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0",
+              "source": "product",
+              "filename": "mcp.md",
+              "score": 0.016129032258064516
+            }
+          ],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0"
+          ],
+          "metrics": {
+            "fact_recall": 1.0,
+            "facts_hit": [
+              "get_document_metadata"
+            ],
+            "source_precision": 1.0,
+            "source_recall": 1.0,
+            "should_answer": true,
+            "abstention_correct": true,
+            "quality": 0.5,
+            "grounded": true,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.218,
+            "generation": 14796.822953998344,
+            "total": 14797.7
+          }
+        },
+        {
+          "id": "v2-18",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0"
+          ],
+          "metrics": {
+            "fact_recall": 1.0,
+            "facts_hit": [],
+            "source_precision": 1.0,
+            "source_recall": 1.0,
+            "should_answer": false,
+            "abstention_correct": true,
+            "quality": 1.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.294,
+            "generation": 18597.140883000975,
+            "total": 18597.644
+          }
+        },
+        {
+          "id": "v2-19",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0"
+          ],
+          "metrics": {
+            "fact_recall": 1.0,
+            "facts_hit": [],
+            "source_precision": 1.0,
+            "source_recall": 1.0,
+            "should_answer": false,
+            "abstention_correct": true,
+            "quality": 1.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.25,
+            "generation": 22167.062130996783,
+            "total": 22167.489
+          }
+        },
+        {
+          "id": "v2-20",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0"
+          ],
+          "metrics": {
+            "fact_recall": 1.0,
+            "facts_hit": [],
+            "source_precision": 1.0,
+            "source_recall": 1.0,
+            "should_answer": false,
+            "abstention_correct": true,
+            "quality": 1.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.22,
+            "generation": 21274.598365998827,
+            "total": 21274.998
+          }
+        },
+        {
+          "id": "v2-21",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "d1bb5037f313e6278c8aff31327f41f3744b7a899c180d8b85650a16c0043489:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0"
+          ],
+          "metrics": {
+            "fact_recall": 1.0,
+            "facts_hit": [],
+            "source_precision": 1.0,
+            "source_recall": 1.0,
+            "should_answer": false,
+            "abstention_correct": true,
+            "quality": 1.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.309,
+            "generation": 783.5436059976928,
+            "total": 784.044
+          }
+        },
+        {
+          "id": "v2-22",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "d1bb5037f313e6278c8aff31327f41f3744b7a899c180d8b85650a16c0043489:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.219,
+            "generation": 740.8169760019518,
+            "total": 741.213
+          }
+        },
+        {
+          "id": "v2-23",
+          "status": "OK",
+          "answer": "According to the document with metadata {\"filename\": \"mcp.md\", \"source\": \"product\", \"strategy\": \"recursive\", \"team\": \"trust\", \"topic\": \"mcp\"}, the source is \"product\" and the MIME type is not provided in the given context.",
+          "citations": [],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "d1bb5037f313e6278c8aff31327f41f3744b7a899c180d8b85650a16c0043489:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.5,
+            "facts_hit": [
+              "product"
+            ],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": true,
+            "quality": 0.25,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.446,
+            "generation": 8528.914357004396,
+            "total": 8529.624
+          }
+        },
+        {
+          "id": "v2-24",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "d1bb5037f313e6278c8aff31327f41f3744b7a899c180d8b85650a16c0043489:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.222,
+            "generation": 745.40364099812,
+            "total": 745.794
+          }
+        },
+        {
+          "id": "v2-25",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.256,
+            "generation": 763.2629279978573,
+            "total": 763.716
+          }
+        },
+        {
+          "id": "v2-26",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0"
+          ],
+          "metrics": {
+            "fact_recall": 1.0,
+            "facts_hit": [],
+            "source_precision": 1.0,
+            "source_recall": 1.0,
+            "should_answer": false,
+            "abstention_correct": true,
+            "quality": 1.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.293,
+            "generation": 804.4619290012633,
+            "total": 805.034
+          }
+        },
+        {
+          "id": "v2-27",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "d1bb5037f313e6278c8aff31327f41f3744b7a899c180d8b85650a16c0043489:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.303,
+            "generation": 790.4986489957082,
+            "total": 791.047
+          }
+        },
+        {
+          "id": "v2-28",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.347,
+            "generation": 747.2950369992759,
+            "total": 747.805
+          }
+        },
+        {
+          "id": "v2-29",
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.163,
+            "generation": 823.2601630006684,
+            "total": 823.626
+          }
+        },
+        {
+          "id": "v2-30",
+          "status": "OK",
+          "answer": "The MCP boundary provides the metadata tool named get_document_metadata, which returns an allowlisted document identifier, filename, MIME type, source, and checksum, but deliberately withhold the document content.",
+          "citations": [],
+          "retrieved_chunks": [
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.5,
+            "facts_hit": [
+              "metadata"
+            ],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": true,
+            "quality": 0.25,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid"
+          },
+          "latency_ms": {
+            "retrieval": 0.232,
+            "generation": 5614.239422000537,
+            "total": 5614.651
+          }
+        }
+      ],
+      "aggregate": {
+        "n": 30,
+        "valid": 30,
+        "quality": 0.208333,
+        "fact_recall": 0.25,
+        "source_precision": 0.2,
+        "source_recall": 0.2,
+        "abstention_accuracy": 0.266667,
+        "mean_latency_ms": 8286.843,
+        "attempts": 30,
+        "rewrites": 0,
+        "llm_calls": 30,
+        "mcp_calls": 0,
+        "retry_percentage": 0.0,
+        "rewrite_percentage": 0.0,
+        "mcp_percentage": 0.0,
+        "strategy_distribution": {
+          "hybrid": 30
+        },
+        "categories": {
+          "ambiguous": {
+            "n": 3,
+            "quality": 0.0,
+            "fact_recall": 0.0
+          },
+          "direct": {
+            "n": 5,
+            "quality": 0.0,
+            "fact_recall": 0.0
+          },
+          "indirect-injection": {
+            "n": 3,
+            "quality": 0.333333,
+            "fact_recall": 0.333333
+          },
+          "insufficient-context": {
+            "n": 4,
+            "quality": 1.0,
+            "fact_recall": 1.0
+          },
+          "metadata/tool": {
+            "n": 2,
+            "quality": 0.125,
+            "fact_recall": 0.25
+          },
+          "multi-chunk": {
+            "n": 5,
+            "quality": 0.05,
+            "fact_recall": 0.1
+          },
+          "paraphrase": {
+            "n": 3,
+            "quality": 0.083333,
+            "fact_recall": 0.166667
+          },
+          "retrieval+MCP": {
+            "n": 2,
+            "quality": 0.0,
+            "fact_recall": 0.0
+          },
+          "terminology": {
+            "n": 3,
+            "quality": 0.166667,
+            "fact_recall": 0.333333
+          }
+        },
+        "provider_errors": 0
+      }
+    },
+    "agentic": {
+      "cases": [
+        {
+          "id": "v2-01",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 2
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 1099.657920000027,
+            "total": 1106.755
+          },
+          "error": null
+        },
+        {
+          "id": "v2-02",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 747.838616000081,
+            "total": 750.978
+          },
+          "error": null
+        },
+        {
+          "id": "v2-03",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 19742.76274300064,
+            "total": 19747.073
+          },
+          "error": null
+        },
+        {
+          "id": "v2-04",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 758.2090170035372,
+            "total": 760.981
+          },
+          "error": null
+        },
+        {
+          "id": "v2-05",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "vector",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 19851.251830004912,
+            "total": 19853.94
+          },
+          "error": null
+        },
+        {
+          "id": "v2-06",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "d1bb5037f313e6278c8aff31327f41f3744b7a899c180d8b85650a16c0043489:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "vector",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 19960.652761998062,
+            "total": 19965.99
+          },
+          "error": null
+        },
+        {
+          "id": "v2-07",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.5,
+            "facts_hit": [
+              "INSUFFICIENT_CONTEXT"
+            ],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.25,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "vector",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 731.3807949976763,
+            "total": 734.548
+          },
+          "error": null
+        },
+        {
+          "id": "v2-08",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 7503.515750999213,
+            "total": 7511.247
+          },
+          "error": null
+        },
+        {
+          "id": "v2-09",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 3
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 1585.3963530025794,
+            "total": 1589.459
+          },
+          "error": null
+        },
+        {
+          "id": "v2-10",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 3
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 13044.126053006039,
+            "total": 13047.89
+          },
+          "error": null
+        },
+        {
+          "id": "v2-11",
+          "status": "ABSTAINED",
+          "answer": "The release process has three gates. The first run unit tests. The next run the integration checks. Finally inspect the generated artifact and commit locally.",
+          "citations": [],
+          "retrieved_chunks": [
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.8,
+            "facts_hit": [
+              "unit tests",
+              "integration checks",
+              "generated artifact",
+              "commit locally"
+            ],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.4,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 23060.100818998762,
+            "total": 23064.761
+          },
+          "error": null
+        },
+        {
+          "id": "v2-12",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 728.0498140025884,
+            "total": 731.357
+          },
+          "error": null
+        },
+        {
+          "id": "v2-13",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "d1bb5037f313e6278c8aff31327f41f3744b7a899c180d8b85650a16c0043489:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 715.5934949987568,
+            "total": 719.684
+          },
+          "error": null
+        },
+        {
+          "id": "v2-14",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 715.4694339988055,
+            "total": 718.452
+          },
+          "error": null
+        },
+        {
+          "id": "v2-15",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 790.118208999047,
+            "total": 792.978
+          },
+          "error": null
+        },
+        {
+          "id": "v2-16",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "114eb4df7e3ab152305a1602409f8d77a8f29897767ec906169f907f9922adf5:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 21252.210698003182,
+            "total": 21255.085
+          },
+          "error": null
+        },
+        {
+          "id": "v2-17",
+          "status": "OK",
+          "answer": "The metadata tool is named \"get_document_metadata\". Its metadata includes an allowlisted document identifier, filename, MIME type, source, and checksum, but does not return the document content. [chunk_id=65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0]",
+          "citations": [
+            {
+              "document_id": "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59",
+              "chunk_id": "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0",
+              "source": "product",
+              "filename": "mcp.md",
+              "score": 0.016129032258064516
+            }
+          ],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0"
+          ],
+          "metrics": {
+            "fact_recall": 1.0,
+            "facts_hit": [
+              "get_document_metadata"
+            ],
+            "source_precision": 1.0,
+            "source_recall": 1.0,
+            "should_answer": true,
+            "abstention_correct": true,
+            "quality": 0.5,
+            "grounded": true,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 14791.863218997605,
+            "total": 14794.569
+          },
+          "error": null
+        },
+        {
+          "id": "v2-18",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0",
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0"
+          ],
+          "metrics": {
+            "fact_recall": 1.0,
+            "facts_hit": [],
+            "source_precision": 1.0,
+            "source_recall": 1.0,
+            "should_answer": false,
+            "abstention_correct": true,
+            "quality": 1.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 16817.615684994962,
+            "total": 16820.921
+          },
+          "error": null
+        },
+        {
+          "id": "v2-19",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0"
+          ],
+          "metrics": {
+            "fact_recall": 1.0,
+            "facts_hit": [],
+            "source_precision": 1.0,
+            "source_recall": 1.0,
+            "should_answer": false,
+            "abstention_correct": true,
+            "quality": 1.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 20722.229129998595,
+            "total": 20724.991
+          },
+          "error": null
+        },
+        {
+          "id": "v2-20",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0"
+          ],
+          "metrics": {
+            "fact_recall": 1.0,
+            "facts_hit": [],
+            "source_precision": 1.0,
+            "source_recall": 1.0,
+            "should_answer": false,
+            "abstention_correct": true,
+            "quality": 1.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 20596.045357997355,
+            "total": 20599.2
+          },
+          "error": null
+        },
+        {
+          "id": "v2-21",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0"
+          ],
+          "metrics": {
+            "fact_recall": 1.0,
+            "facts_hit": [],
+            "source_precision": 1.0,
+            "source_recall": 1.0,
+            "should_answer": false,
+            "abstention_correct": true,
+            "quality": 1.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 913.3811479987344,
+            "total": 916.248
+          },
+          "error": null
+        },
+        {
+          "id": "v2-22",
+          "status": "OK",
+          "answer": "Metadata for 960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8: storage.md (text/markdown).",
+          "citations": [
+            {
+              "kind": "tool",
+              "tool": "get_document_metadata",
+              "document_id": "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8"
+            }
+          ],
+          "retrieved_chunks": [],
+          "metrics": {
+            "fact_recall": 1.0,
+            "facts_hit": [
+              "storage.md"
+            ],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": true,
+            "quality": 0.5,
+            "grounded": true,
+            "retrieved_count": 0
+          },
+          "trace": {
+            "attempts": 0,
+            "rewrites": 0,
+            "llm_calls": 0,
+            "mcp_calls": 1,
+            "strategy": "lexical",
+            "route_mode": "tool_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 0,
+            "total": 17.395
+          },
+          "error": null
+        },
+        {
+          "id": "v2-23",
+          "status": "ABSTAINED",
+          "answer": "According to the document with metadata {\"filename\": \"mcp.md\", \"source\": \"product\", \"strategy\": \"recursive\", \"team\": \"trust\", \"topic\": \"mcp\"}, the source is \"product\" and the MIME type is not provided in the given context.",
+          "citations": [
+            {
+              "kind": "tool",
+              "tool": "get_document_metadata",
+              "document_id": "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5"
+            }
+          ],
+          "retrieved_chunks": [
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "d1bb5037f313e6278c8aff31327f41f3744b7a899c180d8b85650a16c0043489:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.5,
+            "facts_hit": [
+              "product"
+            ],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.25,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 1,
+            "strategy": "hybrid",
+            "route_mode": "retrieval_plus_tool"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 8572.162017000664,
+            "total": 8576.218
+          },
+          "error": null
+        },
+        {
+          "id": "v2-24",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [
+            {
+              "kind": "tool",
+              "tool": "get_document_metadata",
+              "document_id": "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59"
+            }
+          ],
+          "retrieved_chunks": [
+            "d1bb5037f313e6278c8aff31327f41f3744b7a899c180d8b85650a16c0043489:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "d56b3fecc8ed366a3744cccc58f50468138f101f0db47b5f6c6841211edde97b:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 1,
+            "strategy": "hybrid",
+            "route_mode": "retrieval_plus_tool"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 728.0441960028838,
+            "total": 732.086
+          },
+          "error": null
+        },
+        {
+          "id": "v2-25",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [
+            {
+              "kind": "tool",
+              "tool": "get_document_metadata",
+              "document_id": "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107"
+            }
+          ],
+          "retrieved_chunks": [
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 1,
+            "strategy": "vector",
+            "route_mode": "retrieval_plus_tool"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 715.3028020038619,
+            "total": 721.55
+          },
+          "error": null
+        },
+        {
+          "id": "v2-26",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [],
+          "metrics": {
+            "fact_recall": 1.0,
+            "facts_hit": [],
+            "source_precision": 1.0,
+            "source_recall": 1.0,
+            "should_answer": false,
+            "abstention_correct": true,
+            "quality": 1.0,
+            "grounded": false,
+            "retrieved_count": 0
+          },
+          "trace": {
+            "attempts": 0,
+            "rewrites": 0,
+            "llm_calls": 0,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 0,
+            "total": 1.735
+          },
+          "error": "prompt_injection"
+        },
+        {
+          "id": "v2-27",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 0
+          },
+          "trace": {
+            "attempts": 0,
+            "rewrites": 0,
+            "llm_calls": 0,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 0,
+            "total": 1.313
+          },
+          "error": "prompt_injection"
+        },
+        {
+          "id": "v2-28",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 0
+          },
+          "trace": {
+            "attempts": 0,
+            "rewrites": 0,
+            "llm_calls": 0,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 0,
+            "total": 1.429
+          },
+          "error": "prompt_injection"
+        },
+        {
+          "id": "v2-29",
+          "status": "ABSTAINED",
+          "answer": "INSUFFICIENT_CONTEXT",
+          "citations": [],
+          "retrieved_chunks": [
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0",
+            "960a28d6912af1eff7414fed5048fa80db21301c374c66dff6c5db45885be7c8:0",
+            "d1bb5037f313e6278c8aff31327f41f3744b7a899c180d8b85650a16c0043489:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.0,
+            "facts_hit": [],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.0,
+            "grounded": false,
+            "retrieved_count": 4
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "lexical",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 15939.206258997729,
+            "total": 15942.772
+          },
+          "error": null
+        },
+        {
+          "id": "v2-30",
+          "status": "ABSTAINED",
+          "answer": "The MCP boundary provides the metadata tool named get_document_metadata, which returns an allowlisted document identifier, filename, MIME type, source, and checksum, but deliberately withhold the document content.",
+          "citations": [],
+          "retrieved_chunks": [
+            "24a9ef5da5257f86dc6e7f9c66a037d8de73c91f8b91c3e1b478704cf1d25107:0",
+            "8fd4583da1119fd67d2c742a59a6f8b96876a111bdb2ad907ccc68299b605aa5:0",
+            "35710dc00759076acdee42813d06576126d03851a06efa35d9db9904447ae25f:0",
+            "3905c3a0465546ffa9e59c58ce1215f4d6471a61d0ed25ae15073a075ccc04b9:0",
+            "65e72847b3739ed727f7f5216308f453017f02c3efe23f4dfc2f1133f643db59:0"
+          ],
+          "metrics": {
+            "fact_recall": 0.5,
+            "facts_hit": [
+              "metadata"
+            ],
+            "source_precision": 0.0,
+            "source_recall": 0.0,
+            "should_answer": true,
+            "abstention_correct": false,
+            "quality": 0.25,
+            "grounded": false,
+            "retrieved_count": 5
+          },
+          "trace": {
+            "attempts": 1,
+            "rewrites": 0,
+            "llm_calls": 1,
+            "mcp_calls": 0,
+            "strategy": "hybrid",
+            "route_mode": "retrieval_only"
+          },
+          "latency_ms": {
+            "retrieval": 0.0,
+            "generation": 5454.305195999041,
+            "total": 5457.932
+          },
+          "error": null
+        }
+      ],
+      "aggregate": {
+        "n": 30,
+        "valid": 30,
+        "quality": 0.238333,
+        "fact_recall": 0.31,
+        "source_precision": 0.2,
+        "source_recall": 0.2,
+        "abstention_accuracy": 0.233333,
+        "mean_latency_ms": 7921.985,
+        "attempts": 26,
+        "rewrites": 0,
+        "llm_calls": 26,
+        "mcp_calls": 4,
+        "retry_percentage": 0.0,
+        "rewrite_percentage": 0.0,
+        "mcp_percentage": 13.333,
+        "strategy_distribution": {
+          "lexical": 19,
+          "vector": 4,
+          "hybrid": 7
+        },
+        "categories": {
+          "ambiguous": {
+            "n": 3,
+            "quality": 0.0,
+            "fact_recall": 0.0
+          },
+          "direct": {
+            "n": 5,
+            "quality": 0.0,
+            "fact_recall": 0.0
+          },
+          "indirect-injection": {
+            "n": 3,
+            "quality": 0.333333,
+            "fact_recall": 0.333333
+          },
+          "insufficient-context": {
+            "n": 4,
+            "quality": 1.0,
+            "fact_recall": 1.0
+          },
+          "metadata/tool": {
+            "n": 2,
+            "quality": 0.375,
+            "fact_recall": 0.75
+          },
+          "multi-chunk": {
+            "n": 5,
+            "quality": 0.13,
+            "fact_recall": 0.26
+          },
+          "paraphrase": {
+            "n": 3,
+            "quality": 0.083333,
+            "fact_recall": 0.166667
+          },
+          "retrieval+MCP": {
+            "n": 2,
+            "quality": 0.0,
+            "fact_recall": 0.0
+          },
+          "terminology": {
+            "n": 3,
+            "quality": 0.166667,
+            "fact_recall": 0.333333
+          }
+        },
+        "provider_errors": 0
+      }
+    }
+  },
+  "limitations": [
+    "Fact and source scoring is deterministic substring/citation scoring; no sole LLM judge.",
+    "CPU local-model latency is hardware-dependent."
+  ]
+}

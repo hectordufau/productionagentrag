@@ -46,7 +46,7 @@ class RetrievalService:
             return GenerationResult("INSUFFICIENT_CONTEXT", [], [], "INSUFFICIENT_CONTEXT", retrieval, {"status": "not_run"}, {"status": "unsupported"}, 0.0, context)
         if self.provider is None:
             raise RuntimeError("LLM provider is required for generation")
-        response: LLMResponse = self.provider.generate(grounded_prompt(query, context))
+        response: LLMResponse = self.provider.generate(grounded_prompt(query, context), timeout_s=120.0)
         valid, invalid = validate_citations(response.answer, context)
         grounding = validate_grounding(response.answer, context, valid, invalid)
         status = "INSUFFICIENT_CONTEXT" if response.answer.strip().upper() == "INSUFFICIENT_CONTEXT" else ("OK" if not invalid else "UNSUPPORTED_CITATION")
