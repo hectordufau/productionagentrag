@@ -1,21 +1,3 @@
-Metadata-Version: 2.4
-Name: production-agentic-rag
-Version: 0.1.0
-Summary: Provider-independent reference implementation for production Agentic RAG.
-License: MIT
-Requires-Python: >=3.12
-Description-Content-Type: text/markdown
-License-File: LICENSE
-Requires-Dist: fastapi>=0.115
-Requires-Dist: uvicorn[standard]>=0.30
-Requires-Dist: pydantic>=2.9
-Provides-Extra: dev
-Requires-Dist: pytest>=8.3; extra == "dev"
-Requires-Dist: ruff>=0.6; extra == "dev"
-Requires-Dist: mypy>=1.13; extra == "dev"
-Requires-Dist: httpx>=0.27; extra == "dev"
-Dynamic: license-file
-
 # Production Agentic RAG
 
 ## Why this project exists
