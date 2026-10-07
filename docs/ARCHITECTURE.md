@@ -14,6 +14,10 @@ Document identity is SHA-256. Chunks preserve `document_id`, `chunk_id`, `source
 
 The selected local model is `aratan/Agents-A1-4B-Q4_K_M-GGUF:Q4_K_M`, already available in Ollama. It is a 4.2B Q4 GGUF chosen for local CPU/RAM feasibility and reproducibility. License/redistribution remains subject to the model card; this repository makes no commercial-provider claim. Run `ollama list`, then `uvicorn agentic_rag.api.app:app --reload` and `pytest -q`.
 
+## Authorized Agentic RAG
+
+The opt-in typed state graph performs deterministic analysis, existing retrieval routing, evidence evaluation, one bounded rewrite/retry, baseline generation, and citation/grounding validation. It emits a node trace and attempts/LLM-call/rewrite/latency metrics; provider failures, prompt injection, and unsupported evidence abstain. See `docs/AGENTIC-RAG.md`.
+
 ## Explicit non-goals
 
-No LangGraph, MCP, agent/tool routing, memory, observability phase, deployment, commercial API requirement, or M2B work is included. Semantic retrieval remains the existing configured deterministic/local baseline, not a claim of learned embedding quality.
+MCP, deployment, commercial API requirements, and final benchmarking are excluded. The baseline remains the default.

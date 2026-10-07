@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+from typing import Literal
 from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
+from agentic_rag.agentic import AgenticRAGGraph
 from agentic_rag.chunking.core import chunk_document
 from agentic_rag.generation.baseline import RetrievalService
 from agentic_rag.generation.provider import (
@@ -29,6 +31,7 @@ vector_store = VectorStore(DeterministicHashEmbedding())
 provider = OllamaProvider()
 service = RetrievalService(store, provider)
 reranker = DeterministicOverlapReranker()
+agentic_graph = AgenticRAGGraph(store, vector_store, provider, reranker=reranker)
 
 
 class IngestRequest(BaseModel):
@@ -45,6 +48,7 @@ class QueryRequest(BaseModel):
     retrieval: str = Field(default="lexical", pattern="^(lexical|vector|hybrid|hybrid\\+reranking)$")
     metadata_filter: dict[str, object] | None = None
     generate: bool = False
+    mode: Literal["baseline", "agentic"] = "baseline"
     context_tokens: int = Field(default=1800, ge=1, le=12000)
 
 
@@ -94,6 +98,27 @@ def _retrieved(request: QueryRequest):
 @app.post("/v1/query")
 def query(request: QueryRequest) -> dict[str, object]:
     trace_id = uuid4().hex
+    if request.mode == "agentic":
+        result = agentic_graph.run(
+            request.query,
+            limit=request.limit,
+            metadata_filter=request.metadata_filter,
+            context_tokens=request.context_tokens,
+        )
+        return {
+            "status": result["status"],
+            "answer": result.get("answer", "INSUFFICIENT_CONTEXT"),
+            "citations": result.get("citations", []),
+            "retrieval": result.get("retrieval", {"strategy": result["strategy"], "chunks": []}),
+            "generation": result.get("generation", {"status": "not_run"}),
+            "grounding": result.get("grounding", {"status": "unsupported"}),
+            "latency": {"total_ms": result["metrics"]["latency_ms"]},
+            "metrics": result["metrics"],
+            "decision_trace": result["decision_trace"],
+            "trace_id": trace_id,
+            "grounded": result["status"] == "OK",
+            "retrieved_chunks": [item.chunk.chunk_id for item in result.get("results", [])],
+        }
     results = _retrieved(request)
     if not results:
         return {"status": "INSUFFICIENT_CONTEXT", "answer": "INSUFFICIENT_CONTEXT", "citations": [], "retrieval": {"strategy": request.retrieval, "chunks": []}, "generation": {"status": "not_run"}, "grounding": {"status": "unsupported"}, "latency": {"total_ms": 0}, "trace_id": trace_id}

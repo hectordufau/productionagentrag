@@ -1,6 +1,6 @@
 # Production Agentic RAG
 
-A provider-independent reference implementation for a production-oriented RAG baseline. M1 provides ingestion, chunking, lexical retrieval, grounded citations, and fail-closed answers; M2A adds local vector, hybrid, reranking, evaluation, and an optional Qdrant HTTP adapter; Baseline RAG + LLM adds real local Ollama generation, context budgets, citation validation and grounding checks. See `docs/RAG-PIPELINE.md` and `docs/GENERATION.md`.
+A provider-independent reference implementation for a production-oriented RAG baseline. M1 provides ingestion, chunking, lexical retrieval, grounded citations, and fail-closed answers; M2A adds local vector, hybrid, reranking, evaluation, and an optional Qdrant HTTP adapter; Baseline RAG + LLM adds real local Ollama generation, context budgets, citation validation and grounding checks. The authorized Agentic RAG phase adds a bounded deterministic state graph while preserving baseline mode. See `docs/RAG-PIPELINE.md`, `docs/ARCHITECTURE.md`, and `docs/AGENTIC-RAG.md`.
 
 `pytest -q` and `ruff check src tests scripts` are the local gates. The reproducible generation comparison is:
 
@@ -26,7 +26,7 @@ The default query mode is M1 lexical retrieval. It returns grounded citations wh
 
 ## Architecture
 
-`POST /v1/ingest` creates a checksum-identified `Document`, chunks it, and indexes chunks in the in-memory lexical and local vector controls. `POST /v1/query` supports `lexical` (default), `vector`, `hybrid`, and `hybrid+reranking`. The API exposes `/health`, `/ready`, `/version`, and an explicit Qdrant health probe.
+`POST /v1/ingest` creates a checksum-identified `Document`, chunks it, and indexes chunks in the in-memory lexical and local vector controls. `POST /v1/query` supports `lexical` (default), `vector`, `hybrid`, and `hybrid+reranking`. Add `"mode":"agentic"` to use the bounded analyze/retrieve/evaluate/rewrite/generate/validate graph; omit it for the compatibility baseline. The API exposes `/health`, `/ready`, `/version`, and an explicit Qdrant health probe.
 
 M2A retrieval components are provider-independent protocols and deterministic implementations:
 
@@ -50,4 +50,4 @@ Qdrant is provisioned by `docker compose`; `/v1/retrieval/qdrant-health` returns
 
 ## Scope
 
-Included: M1 baseline and M2A retrieval engineering. Excluded: M2B, LangGraph, MCP, LLM generation, production persistence claims, tags, releases, and pushes. The repository remains PRE-v1.0.
+Included: M1 baseline, M2A retrieval engineering, and the authorized bounded Agentic RAG state graph. Baseline mode remains the default and unchanged. MCP, final benchmark, tags, releases, and pushes are excluded. The repository remains PRE-v1.0.
