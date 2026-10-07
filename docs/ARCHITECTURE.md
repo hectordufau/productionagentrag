@@ -16,7 +16,7 @@ The selected local model is `aratan/Agents-A1-4B-Q4_K_M-GGUF:Q4_K_M`, already av
 
 ## Authorized Agentic RAG
 
-The opt-in typed state graph performs deterministic analysis, existing retrieval routing, evidence evaluation, one bounded rewrite/retry, baseline generation, and citation/grounding validation. It emits a node trace and attempts/LLM-call/rewrite/latency metrics; provider failures, prompt injection, and unsupported evidence abstain. See `docs/AGENTIC-RAG.md`.
+The opt-in typed state graph performs deterministic analysis, existing retrieval routing, evidence evaluation, one bounded rewrite/retry, baseline generation, and citation/grounding validation. It now also selects explicit `retrieval_only`, `tool_only`, or `retrieval_plus_tool` routes. The latter two use the separate allowlisted MCP metadata client; source answers retain chunk citations and add tool provenance. It emits a node trace and attempts/LLM-call/rewrite/latency metrics; provider and MCP failures, prompt injection, and unsupported evidence abstain. See `docs/AGENTIC-RAG.md` and `docs/MCP.md`.
 
 ## Explicit non-goals
 

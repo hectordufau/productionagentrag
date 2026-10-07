@@ -6,12 +6,16 @@ requests without that field retain baseline behavior.
 
 ```mermaid
 flowchart LR
-  A[Analyze query] --> B[Select lexical/vector/hybrid]
+  A[Analyze query] --> R{Deterministic route}
+  R -->|retrieval_only| B[Select lexical/vector/hybrid]
+  R -->|tool_only| T[MCP metadata tool]
+  R -->|retrieval_plus_tool| B
   B --> C[Retrieve existing indexes]
   C --> D{Evidence?}
   D -- no --> E[Deterministic rewrite, max 2 attempts]
   E --> C
-  D -- yes --> F[Baseline context + Ollama generation]
+  D -- yes --> T
+  T --> F[Baseline context + Ollama generation]
   F --> G[Validate citations and grounding]
   G -- invalid --> H[Abstain]
   G -- grounded --> I[Answer + trace + metrics]

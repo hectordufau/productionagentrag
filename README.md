@@ -50,4 +50,5 @@ Qdrant is provisioned by `docker compose`; `/v1/retrieval/qdrant-health` returns
 
 ## Scope
 
-Included: M1 baseline, M2A retrieval engineering, and the authorized bounded Agentic RAG state graph. Baseline mode remains the default and unchanged. MCP, final benchmark, tags, releases, and pushes are excluded. The repository remains PRE-v1.0.
+Included: M1 baseline, M2A retrieval engineering, and the authorized bounded Agentic RAG state graph. Baseline mode remains the default and unchanged. The graph emits deterministic route modes for retrieval-only, tool-only metadata, and retrieval-plus-tool source questions. The optional official MCP Python SDK integration is documented in `docs/MCP.md`; it exposes only allowlisted document metadata and preserves chunk citations plus tool provenance. Baseline mode remains the default and unchanged.
+
