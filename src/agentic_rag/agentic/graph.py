@@ -183,22 +183,28 @@ class AgenticRAGGraph:
         return "end" if state.get("route_mode") == "tool_only" else "generate"
 
     def _node_tool(self, state: AgenticState) -> AgenticState:
+        started = time.perf_counter()
         if self.mcp_client is None or not state.get("document_id"):
             state["status"] = "MCP_ERROR"
             state["error"] = "MCP client unavailable or document_id missing"
+            self._record(state, "tool", tool="get_document_metadata", status="error", tool_latency_ms=round((time.perf_counter() - started) * 1000, 3))
             return state
         try:
             state["tool_result"] = self.mcp_client.call("get_document_metadata", {"document_id": state["document_id"]})
         except MCPToolError as exc:
             state["status"] = "MCP_ERROR"
             state["error"] = str(exc)
+            self._record(state, "tool", tool="get_document_metadata", status="error", tool_latency_ms=round((time.perf_counter() - started) * 1000, 3))
             return state
+        tool_latency_ms = round((time.perf_counter() - started) * 1000, 3)
+        state["metrics"]["tool_calls"] += 1
+        state["metrics"]["tool_latency_ms"] += tool_latency_ms
         document = state["tool_result"]["document"]
         state["answer"] = f"Metadata for {document['document_id']}: {document['filename']} ({document['mime_type']})."
         state["citations"] = [{"kind": "tool", "tool": "get_document_metadata", "document_id": document["document_id"]}]
         if state.get("route_mode") == "tool_only":
             state["status"] = "OK"
-        self._record(state, "tool", tool="get_document_metadata", document_id=document["document_id"])
+        self._record(state, "tool", tool="get_document_metadata", status="success", tool_latency_ms=tool_latency_ms, document_id=document["document_id"])
         return state
 
     def _node_retrieve(self, state: AgenticState) -> AgenticState:
@@ -307,7 +313,7 @@ class AgenticRAGGraph:
             "strategy": "lexical",
             "results": [],
             "decision_trace": [],
-            "metrics": {"attempts": 0, "llm_calls": 0, "rewrites": 0, "latency_ms": 0.0},
+            "metrics": {"attempts": 0, "llm_calls": 0, "rewrites": 0, "tool_calls": 0, "tool_latency_ms": 0.0, "latency_ms": 0.0},
             "metadata_filter": metadata_filter,
             "limit": limit,
             "context_tokens": context_tokens or self.context_tokens,

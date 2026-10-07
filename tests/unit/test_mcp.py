@@ -59,4 +59,6 @@ def test_routing_modes_and_tool_provenance():
     state = graph.run(f"what is the metadata for document {document.document_id}")
     assert state["status"] == "OK"
     assert state["citations"][0]["kind"] == "tool"
+    assert state["metrics"]["tool_calls"] == 1
+    assert state["decision_trace"][-1]["status"] == "success"
     assert "system prompt" not in state["answer"].lower()
