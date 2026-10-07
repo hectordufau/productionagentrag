@@ -12,8 +12,8 @@
 ## Verification evidence
 
 - **Full tests:** 13 passed, 1 warning (FastAPI/httpx deprecation warning); `python -m pytest -q`
-- **Previous M1 count:** 10 passed
-- **Regression:** no test failures; M1 lexical, ingestion, grounded-answer, and API tests remain green
+- **Previous M1 count:** 7 passed
+- **Regression:** no test failures; all 7 original M1 tests remain present and green; M2A adds 6 tests
 - **Lint:** `python -m ruff check .` passed
 - **Compose:** `docker compose config` passed using a temporary `.env.example`-derived `.env`; no live services were started
 - **Benchmark:** `python scripts/run_benchmark.py` passed and regenerated `artifacts/benchmarks/m2a-retrieval-v1.json`
