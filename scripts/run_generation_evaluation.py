@@ -92,7 +92,7 @@ def main() -> int:
         OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
         print(json.dumps(result, indent=2))
         return 2
-    hybrid_result = run_strategy("hybrid+llm", cases, store, chunks, False)
+    hybrid_result = run_strategy("hybrid+llm", cases, store, chunks, True)
     semantic_result = run_strategy("vector-semantic+llm", cases, store, chunks, True)
     result["strategies"].extend([hybrid_result, semantic_result])
     if any(case["status"] == "PROVIDER_ERROR" for strategy in result["strategies"] for case in strategy["cases"]):
