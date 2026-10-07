@@ -49,7 +49,7 @@ class OllamaProvider:
         self.model, self.base_url = model, base_url.rstrip("/")
 
     def generate(self, prompt: str, *, timeout_s: float = 60.0) -> LLMResponse:
-        payload = json.dumps({"model": self.model, "prompt": prompt, "stream": False, "options": {"temperature": 0}}).encode()
+        payload = json.dumps({"model": self.model, "prompt": prompt, "stream": False, "think": False, "options": {"temperature": 0, "num_ctx": 2048, "num_predict": 256}}).encode()
         started = time.perf_counter()
         try:
             request = Request(self.base_url + "/api/generate", data=payload, headers={"content-type": "application/json"})

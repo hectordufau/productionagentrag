@@ -9,4 +9,4 @@
 7. Returned chunk citations are validated against the exact context sent to the provider.
 8. Grounding validation runs separately from generation using deterministic evidence overlap.
 
-The latest evaluation artifact (`artifacts/generation-evaluation-v1.json`) contains 4 identical cases for each strategy (2 answerable, 2 unanswerable) and records retrieval/generation/total latency. The real Ollama model was attempted, but provider failures prevented valid generated answers, so metric values are null rather than guessed. The semantic challenger ran through the CPU sentence-transformers environment, not hash fallback.
+The latest evaluation artifact (`artifacts/generation-evaluation-v1.json`) contains 4 identical cases for each strategy (2 answerable, 2 unanswerable) and records retrieval/generation/total latency. The real Ollama model completed all cases using the CPU sentence-transformers environment, not hash fallback. Results are a pipeline smoke benchmark only.

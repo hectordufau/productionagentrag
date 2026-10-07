@@ -49,7 +49,7 @@ class RetrievalService:
         response: LLMResponse = self.provider.generate(grounded_prompt(query, context))
         valid, invalid = validate_citations(response.answer, context)
         grounding = validate_grounding(response.answer, context, valid, invalid)
-        status = "OK" if not invalid else "UNSUPPORTED_CITATION"
+        status = "INSUFFICIENT_CONTEXT" if response.answer.strip().upper() == "INSUFFICIENT_CONTEXT" else ("OK" if not invalid else "UNSUPPORTED_CITATION")
         citations = [{"document_id": r.chunk.document_id, "chunk_id": r.chunk.chunk_id, "source": r.chunk.metadata.get("source"), "filename": r.chunk.metadata.get("filename"), "score": r.score} for r in context.chunks if r.chunk.chunk_id in valid]
         total = ( __import__("time").perf_counter() - started) * 1000
         return GenerationResult(response.answer, citations, [r.chunk.chunk_id for r in context.chunks], status, retrieval, {"status": "ok", "provider": response.provider, "model": response.model, "latency_ms": response.latency_ms, "prompt_tokens": response.prompt_tokens, "completion_tokens": response.completion_tokens, "total_tokens": response.total_tokens}, {"status": grounding.status, "supported_claims": grounding.supported_claims, "unsupported_claims": grounding.unsupported_claims}, total, context)

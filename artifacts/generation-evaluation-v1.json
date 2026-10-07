@@ -13,70 +13,131 @@
       "cases": [
         {
           "id": "g1",
-          "metrics": null,
-          "status": "PROVIDER_ERROR",
-          "error": "Ollama unavailable at http://127.0.0.1:11434: HTTP Error 500: Internal Server Error",
+          "metrics": {
+            "answer_correctness": 1.0,
+            "groundedness": 1.0,
+            "citation_correctness": 1.0,
+            "abstention_correctness": 1.0
+          },
+          "status": "OK",
+          "answer": "Vectors are stored in Qdrant.\n\n**Citation:**  \n[b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0]",
           "retrieved_chunks": [
             "b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0",
             "35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0"
           ],
           "latency_ms": {
-            "retrieval": 0.6102949992055073,
-            "generation": 16819.5572409968,
-            "total": 16820.167535996006
+            "retrieval": 22.68363499752013,
+            "generation": 29714.097803000186,
+            "total": 29736.781437997706
+          },
+          "provider": {
+            "status": "ok",
+            "provider": "ollama",
+            "model": "aratan/Agents-A1-4B-Q4_K_M-GGUF:Q4_K_M",
+            "latency_ms": 29711.979116000293,
+            "prompt_tokens": 803,
+            "completion_tokens": 72,
+            "total_tokens": 875
           }
         },
         {
           "id": "g2",
-          "metrics": null,
-          "status": "PROVIDER_ERROR",
-          "error": "Ollama unavailable at http://127.0.0.1:11434: Remote end closed connection without response",
+          "metrics": {
+            "answer_correctness": 0.0,
+            "groundedness": 1.0,
+            "citation_correctness": 1.0,
+            "abstention_correctness": 1.0
+          },
+          "status": "OK",
+          "answer": "The ingestion pipeline creates a checksum-identified document and chunks it.\n\n**Citation:** [35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0]",
           "retrieved_chunks": [
             "35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0",
             "b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0"
           ],
           "latency_ms": {
-            "retrieval": 3.4997239999938756,
-            "generation": 15667.126843000005,
-            "total": 15670.626567
+            "retrieval": 106.40719500224805,
+            "generation": 34260.89384200168,
+            "total": 34367.30103700393
+          },
+          "provider": {
+            "status": "ok",
+            "provider": "ollama",
+            "model": "aratan/Agents-A1-4B-Q4_K_M-GGUF:Q4_K_M",
+            "latency_ms": 34260.48871200328,
+            "prompt_tokens": 805,
+            "completion_tokens": 81,
+            "total_tokens": 886
           }
         },
         {
           "id": "g3",
-          "metrics": null,
-          "status": "PROVIDER_ERROR",
-          "error": "Ollama unavailable at http://127.0.0.1:11434: <urlopen error [Errno 111] Connection refused>",
+          "metrics": {
+            "answer_correctness": 0.0,
+            "groundedness": 0.0,
+            "citation_correctness": 1.0,
+            "abstention_correctness": 1.0
+          },
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
           "retrieved_chunks": [
             "35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0",
             "b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0"
           ],
           "latency_ms": {
-            "retrieval": 14.184823005052749,
-            "generation": 70.17108299623942,
-            "total": 84.35590600129217
+            "retrieval": 49.693675005983096,
+            "generation": 25121.56225900253,
+            "total": 25171.255934008514
+          },
+          "provider": {
+            "status": "ok",
+            "provider": "ollama",
+            "model": "aratan/Agents-A1-4B-Q4_K_M-GGUF:Q4_K_M",
+            "latency_ms": 25121.41754399636,
+            "prompt_tokens": 808,
+            "completion_tokens": 5,
+            "total_tokens": 813
           }
         },
         {
           "id": "g4",
-          "metrics": null,
-          "status": "PROVIDER_ERROR",
-          "error": "Ollama unavailable at http://127.0.0.1:11434: <urlopen error [Errno 111] Connection refused>",
+          "metrics": {
+            "answer_correctness": 0.0,
+            "groundedness": 0.0,
+            "citation_correctness": 1.0,
+            "abstention_correctness": 1.0
+          },
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
           "retrieved_chunks": [
             "35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0",
             "b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0"
           ],
           "latency_ms": {
-            "retrieval": 0.14865800039842725,
-            "generation": 0.3114020000793971,
-            "total": 0.46006000047782436
+            "retrieval": 176.07099200540688,
+            "generation": 25231.32075999456,
+            "total": 25407.391751999967
+          },
+          "provider": {
+            "status": "ok",
+            "provider": "ollama",
+            "model": "aratan/Agents-A1-4B-Q4_K_M-GGUF:Q4_K_M",
+            "latency_ms": 25231.16657200444,
+            "prompt_tokens": 805,
+            "completion_tokens": 5,
+            "total_tokens": 810
           }
         }
       ],
-      "metrics": null,
+      "metrics": {
+        "answer_correctness": 0.25,
+        "groundedness": 0.5,
+        "citation_correctness": 1.0,
+        "abstention_correctness": 1.0
+      },
       "latency_ms": {
-        "retrieval": 4.61087500116264,
-        "generation": 8139.291642248281,
-        "total": 8143.902517249444
+        "retrieval": 88.71387425278954,
+        "generation": 28581.96866599974,
+        "total": 28670.68254025253
       }
     },
     {
@@ -84,74 +145,133 @@
       "cases": [
         {
           "id": "g1",
-          "metrics": null,
-          "status": "PROVIDER_ERROR",
-          "error": "Ollama unavailable at http://127.0.0.1:11434: <urlopen error [Errno 111] Connection refused>",
+          "metrics": {
+            "answer_correctness": 1.0,
+            "groundedness": 1.0,
+            "citation_correctness": 1.0,
+            "abstention_correctness": 1.0
+          },
+          "status": "OK",
+          "answer": "Vectors are stored in Qdrant.\n\n**Citation:**  \n[b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0]",
           "retrieved_chunks": [
             "b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0",
             "35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0"
           ],
           "latency_ms": {
-            "retrieval": 26.181523004197516,
-            "generation": 0.39805399865144864,
-            "total": 26.579577002848964
+            "retrieval": 28.350114997010678,
+            "generation": 29471.615080998163,
+            "total": 29499.965195995173
+          },
+          "provider": {
+            "status": "ok",
+            "provider": "ollama",
+            "model": "aratan/Agents-A1-4B-Q4_K_M-GGUF:Q4_K_M",
+            "latency_ms": 29470.90508099791,
+            "prompt_tokens": 803,
+            "completion_tokens": 72,
+            "total_tokens": 875
           }
         },
         {
           "id": "g2",
-          "metrics": null,
-          "status": "PROVIDER_ERROR",
-          "error": "Ollama unavailable at http://127.0.0.1:11434: <urlopen error [Errno 111] Connection refused>",
+          "metrics": {
+            "answer_correctness": 0.0,
+            "groundedness": 1.0,
+            "citation_correctness": 1.0,
+            "abstention_correctness": 1.0
+          },
+          "status": "OK",
+          "answer": "The ingestion pipeline creates a checksum-identified document and chunks it.\n\n**Citation:** [35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0]",
           "retrieved_chunks": [
             "35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0",
             "b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0"
           ],
           "latency_ms": {
-            "retrieval": 31.634719998692162,
-            "generation": 0.5037079972680658,
-            "total": 32.13842799596023
+            "retrieval": 71.2901939987205,
+            "generation": 34008.53478699719,
+            "total": 34079.82498099591
+          },
+          "provider": {
+            "status": "ok",
+            "provider": "ollama",
+            "model": "aratan/Agents-A1-4B-Q4_K_M-GGUF:Q4_K_M",
+            "latency_ms": 34006.93714200315,
+            "prompt_tokens": 805,
+            "completion_tokens": 81,
+            "total_tokens": 886
           }
         },
         {
           "id": "g3",
-          "metrics": null,
-          "status": "PROVIDER_ERROR",
-          "error": "Ollama unavailable at http://127.0.0.1:11434: <urlopen error [Errno 111] Connection refused>",
+          "metrics": {
+            "answer_correctness": 0.0,
+            "groundedness": 0.0,
+            "citation_correctness": 1.0,
+            "abstention_correctness": 1.0
+          },
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
           "retrieved_chunks": [
             "b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0",
             "35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0"
           ],
           "latency_ms": {
-            "retrieval": 22.906843994860537,
-            "generation": 0.31046100048115477,
-            "total": 23.217304995341692
+            "retrieval": 27.30040699680103,
+            "generation": 27234.951053003897,
+            "total": 27262.251460000698
+          },
+          "provider": {
+            "status": "ok",
+            "provider": "ollama",
+            "model": "aratan/Agents-A1-4B-Q4_K_M-GGUF:Q4_K_M",
+            "latency_ms": 27234.714555997925,
+            "prompt_tokens": 808,
+            "completion_tokens": 5,
+            "total_tokens": 813
           }
         },
         {
           "id": "g4",
-          "metrics": null,
-          "status": "PROVIDER_ERROR",
-          "error": "Ollama unavailable at http://127.0.0.1:11434: <urlopen error [Errno 111] Connection refused>",
+          "metrics": {
+            "answer_correctness": 0.0,
+            "groundedness": 0.0,
+            "citation_correctness": 1.0,
+            "abstention_correctness": 1.0
+          },
+          "status": "INSUFFICIENT_CONTEXT",
+          "answer": "INSUFFICIENT_CONTEXT",
           "retrieved_chunks": [
             "b6064df8f936c56a39c8dbc23ad883bd0109ff93a1bc0b0eb5ec2c4073ce7f9f:0",
             "35889b56a54b1da1a0f3bd45654b2baad17148a46d17d5e227e026862c6dbbb3:0"
           ],
           "latency_ms": {
-            "retrieval": 19.09273799537914,
-            "generation": 0.4907750044367276,
-            "total": 19.583512999815866
+            "retrieval": 48.19438000413356,
+            "generation": 27505.472141005157,
+            "total": 27553.66652100929
+          },
+          "provider": {
+            "status": "ok",
+            "provider": "ollama",
+            "model": "aratan/Agents-A1-4B-Q4_K_M-GGUF:Q4_K_M",
+            "latency_ms": 27504.945480999595,
+            "prompt_tokens": 805,
+            "completion_tokens": 5,
+            "total_tokens": 810
           }
         }
       ],
-      "metrics": null,
+      "metrics": {
+        "answer_correctness": 0.25,
+        "groundedness": 0.5,
+        "citation_correctness": 1.0,
+        "abstention_correctness": 1.0
+      },
       "latency_ms": {
-        "retrieval": 24.95395624828234,
-        "generation": 0.4257495002093492,
-        "total": 25.379705748491688
+        "retrieval": 43.78377399916644,
+        "generation": 29555.1432655011,
+        "total": 29598.927039500268
       }
     }
   ],
-  "limitations": [
-    "Ollama generation was attempted for every case but the local provider returned errors; metrics are null and were not fabricated."
-  ]
+  "limitations": []
 }

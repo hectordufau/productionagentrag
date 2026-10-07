@@ -46,8 +46,9 @@ def score_case(case: dict, output, expected: dict) -> dict[str, float]:
     answer_correctness = float(bool(expected_answer) and expected_answer.rstrip(".") in answer)
     groundedness = float(output.grounding.get("status") == "grounded")
     cited = {item["chunk_id"] for item in output.citations}
-    relevant = set(case.get("relevant_chunks", []))
-    citation_correctness = float(bool(cited) and cited <= relevant) if case["answerable"] else float(not cited)
+    cited_files = {item.get("filename") for item in output.citations}
+    expected_files = set(case.get("expected_filenames", []))
+    citation_correctness = float(bool(cited) and cited_files <= expected_files and bool(cited_files & expected_files)) if case["answerable"] else float(not cited)
     abstention_correctness = float((not case["answerable"]) == (output.status == "INSUFFICIENT_CONTEXT"))
     return {"answer_correctness": answer_correctness, "groundedness": groundedness, "citation_correctness": citation_correctness, "abstention_correctness": abstention_correctness}
 

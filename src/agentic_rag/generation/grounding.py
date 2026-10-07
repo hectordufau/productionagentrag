@@ -69,7 +69,7 @@ ANSWER (with citations):"""
 
 def validate_citations(answer: str, context: Context) -> tuple[list[str], list[str]]:
     """Return exact sent chunk IDs and explicit citation IDs that were not sent."""
-    cited = re.findall(re.escape("[chunk_id=") + r"([^]]+)" + re.escape("]"), answer)
+    cited = re.findall(r"\[(?:chunk_id=)?([A-Za-z0-9_.:/-]{8,})\]", answer)
     allowed = {result.chunk.chunk_id for result in context.chunks}
     valid = list(dict.fromkeys(value for value in cited if value in allowed))
     invalid = list(dict.fromkeys(value for value in cited if value not in allowed))
@@ -87,7 +87,9 @@ def validate_grounding(answer: str, context: Context, citations: list[str], inva
         if result.chunk.chunk_id in citations
     )
     evidence = set(re.findall(r"[a-z0-9]{3,}", cited_text))
-    sentences = [sentence.strip() for sentence in re.split(r"[.!?\n]+", answer) if sentence.strip()]
+    evidence_answer = re.sub(r"\[(?:chunk_id=)?[A-Za-z0-9_.:/-]{8,}\]", "", answer)
+    evidence_answer = re.sub(r"\*{0,2}\s*citations?\s*:?\s*\*{0,2}", "", evidence_answer, flags=re.IGNORECASE)
+    sentences = [sentence.strip() for sentence in re.split(r"[.!?\n]+", evidence_answer) if sentence.strip()]
     supported = sum(
         bool(set(re.findall(r"[a-z0-9]{3,}", sentence.lower())) & evidence)
         for sentence in sentences

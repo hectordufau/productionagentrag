@@ -8,7 +8,7 @@ A provider-independent reference implementation for a production-oriented RAG ba
 PYTHONPATH=src .venv-semantic-cpu/bin/python scripts/run_generation_evaluation.py
 ```
 
-The checked-in evaluation artifact records the latest real-provider attempt. On 2026-10-07 the dataset had 4 cases (2 answerable, 2 unanswerable); the configured Ollama model was attempted for both strategies, but provider errors made both metric blocks null. The latest evaluation is documented in `docs/GENERATION.md`; rerun it after restoring Ollama availability.
+The checked-in evaluation artifact records the latest real-provider run. On 2026-10-07 the dataset had 4 cases (2 answerable, 2 unanswerable); both Hybrid+LLM and Vector Semantic+LLM completed with the configured Ollama model. Results are documented in `docs/GENERATION.md` and are intended as pipeline validation, not a statistically meaningful benchmark.
 
 ## Quickstart (M1 control)
 
