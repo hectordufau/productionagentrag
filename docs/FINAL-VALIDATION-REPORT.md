@@ -5,7 +5,7 @@
 - **Repository:** `/home/hector/workspace/productionagentrag`
 - **Branch:** `main`
 - **Candidate Commit SHA:** `193e38e31973fe5e4965ca92673eb3bd9c4a4112`
-- **Final HEAD:** `a312e61` (local report correction; no push/tag/release)
+- **Final HEAD:** local documentation correction commits (no push/tag/release)
 - **Working Tree:** clean before this retry
 - **Scope:** M2A.1 retrieval validation only. M2B, LangGraph, Agentic RAG, MCP, and LLM generation are not authorized.
 - **Qdrant:** live `m2a1-qdrant`, image `qdrant/qdrant:v1.12.5`, healthy on `localhost:6333`; persistent Docker volume `m2a1_qdrant_data` mounted at `/qdrant/storage`. Integration lifecycle passed against the real instance.
