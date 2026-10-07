@@ -14,12 +14,12 @@
     "provider": "local",
     "version": "1"
   },
-  "git_commit": "3436b9567dfdfe0797a783307db773a9329c1548",
+  "git_commit": "b324261a654ab853a46c3e843b5c404c6986e8fb",
   "results": {
     "hybrid": {
       "hit_rate": 0.875,
-      "latency_ms_mean": 0.139491,
-      "latency_ms_p95": 0.166386,
+      "latency_ms_mean": 0.139661,
+      "latency_ms_p95": 0.217068,
       "mrr": 0.875,
       "ndcg": 0.864965,
       "precision": 0.25,
@@ -28,8 +28,8 @@
     },
     "hybrid+reranking": {
       "hit_rate": 0.875,
-      "latency_ms_mean": 0.215884,
-      "latency_ms_p95": 0.553881,
+      "latency_ms_mean": 0.195085,
+      "latency_ms_p95": 0.287954,
       "mrr": 0.875,
       "ndcg": 0.875,
       "precision": 0.25,
@@ -38,8 +38,8 @@
     },
     "lexical": {
       "hit_rate": 0.875,
-      "latency_ms_mean": 0.020549,
-      "latency_ms_p95": 0.050458,
+      "latency_ms_mean": 0.024426,
+      "latency_ms_p95": 0.062352,
       "mrr": 0.875,
       "ndcg": 0.816608,
       "precision": 0.5625,
@@ -48,8 +48,8 @@
     },
     "vector": {
       "hit_rate": 0.875,
-      "latency_ms_mean": 0.106424,
-      "latency_ms_p95": 0.138167,
+      "latency_ms_mean": 0.130442,
+      "latency_ms_p95": 0.211267,
       "mrr": 0.875,
       "ndcg": 0.875,
       "precision": 0.25,
@@ -64,5 +64,5 @@
     "reranker_model": "deterministic-overlap",
     "reranker_provider": "local"
   },
-  "timestamp": "2026-10-07T18:33:12.693387+00:00"
+  "timestamp": "2026-10-07T18:34:02.833957+00:00"
 }
