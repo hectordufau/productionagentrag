@@ -1,0 +1,9 @@
+{
+  "dataset_version": "m2a-v1",
+  "description": "Small deterministic retrieval control set; relevance is chunk-id based.",
+  "cases": [
+    {"query": "vector storage", "relevant_chunk_ids": ["chunk-qdrant"]},
+    {"query": "metadata database", "relevant_chunk_ids": ["chunk-postgres"]},
+    {"query": "document checksum", "relevant_chunk_ids": ["chunk-checksum"]}
+  ]
+}

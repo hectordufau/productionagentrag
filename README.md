@@ -1,53 +1,27 @@
-# Production Agentic RAG
+# M2A Retrieval Engineering
 
-## Why this project exists
+M2A adds retrieval engineering only. M1's lexical `InMemoryStore` and deterministic grounded answer remain the default and remain executable.
 
-A provider-independent reference implementation for building observable, evaluated and secure RAG systems. The repository is intentionally incremental: the deterministic local baseline is the control before Agentic RAG, MCP and provider integrations are added.
-
-## Current status
-
-**Milestone M1 — foundation and baseline, in progress.** Implemented: API bootstrap, health/readiness/version, deterministic document identity, local ingestion/chunking, keyword retrieval, grounded baseline responses and tests. Qdrant, PostgreSQL, Redis, LangGraph, OpenTelemetry and MCP are planned integrations, not fake claims of completion.
-
-## Quick start
+## Local retrieval
 
 ```bash
-cp .env.example .env
-python -m venv .venv && . .venv/bin/activate
-make setup
-make test
-uvicorn agentic_rag.api.app:app --reload
+python scripts/run_benchmark.py
+pytest -q
 ```
 
-Then ingest and query:
+The benchmark writes `artifacts/benchmarks/m2a-retrieval-v1.json` and compares lexical, deterministic local vector, explicit reciprocal-rank-fusion hybrid, and hybrid plus deterministic overlap reranking. The versioned relevance set is `datasets/m2a-retrieval-v1.json`. Metrics are Precision, Recall, HitRate, MRR, NDCG, mean latency and p95 latency.
+
+The local embedding provider is `DeterministicHashEmbedding`: signed feature hashing, fixed dimension, no network/model download. `VectorStore.search(..., metadata_filter={...})` applies exact metadata matches. `reciprocal_rank_fusion` uses `1/(60+rank)` with 1-based ranks.
+
+API query behavior defaults to M1 lexical retrieval. M2A modes are explicit:
 
 ```bash
-curl -X POST http://localhost:8000/v1/ingest -H 'content-type: application/json' \
-  -d '{"source":"sample","filename":"guide.md","content":"Qdrant stores vectors. PostgreSQL stores metadata."}'
-curl -X POST http://localhost:8000/v1/query -H 'content-type: application/json' \
-  -d '{"query":"Where are vectors stored?"}'
+curl -X POST localhost:8000/v1/query -H 'content-type: application/json' \
+  -d '{"query":"where are vectors stored","retrieval":"hybrid+reranking","limit":5}'
 ```
 
-## Architecture
+The optional Qdrant availability probe is `GET /v1/retrieval/qdrant-health`. It returns HTTP 503 with an explicit error when Qdrant is unavailable; it does not silently fall back. `docker compose up --build` starts the API and pinned Qdrant service.
 
-```mermaid
-flowchart LR
-  D[Documents] --> I[Ingestion + checksum]
-  I --> C[Chunking]
-  C --> S[Storage abstraction]
-  Q[Query API] --> R[Retrieval]
-  S --> R
-  R --> G[Baseline generation]
-  G --> E[Answer + citations]
-```
+## Scope boundary
 
-## Design constraints
-
-- Local deterministic mode works without a commercial provider.
-- Retrieved content is data, not instructions.
-- Duplicate documents are rejected by content checksum.
-- Unsupported files and invalid chunk configuration fail explicitly.
-- Benchmark claims must be backed by versioned artifacts.
-
-## Roadmap
-
-M1: RAG Foundation. M2: Agentic workflow + MCP. M3: evaluation, security and observability. M4: packaging, Cloud Run example and final evidence report. `v1.0.0` is not released automatically.
+No LangGraph, Agentic RAG, MCP, LLM generation, M2B, tags or release work is included. This repository remains PRE-v1.0.

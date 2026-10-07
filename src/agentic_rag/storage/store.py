@@ -18,10 +18,12 @@ class InMemoryStore:
         for chunk in chunks:
             self.chunks[chunk.chunk_id] = chunk
 
-    def search(self, query: str, limit: int = 5) -> list[SearchResult]:
+    def search(self, query: str, limit: int = 5, metadata_filter: dict[str, object] | None = None) -> list[SearchResult]:
         terms = set(query.lower().split())
         scored: list[SearchResult] = []
         for chunk in self.chunks.values():
+            if metadata_filter and any(chunk.metadata.get(key) != value for key, value in metadata_filter.items()):
+                continue
             words = set(chunk.content.lower().split())
             overlap = len(terms & words)
             if overlap:

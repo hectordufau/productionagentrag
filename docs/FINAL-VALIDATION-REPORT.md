@@ -1,15 +1,15 @@
-# M1 Validation Report
+# M2A Final Validation Report
 
-Status: foundation implemented and locally verifiable. This is not a v1.0 release.
+Status: **PRE-v1.0**. M2A retrieval engineering is implemented; no release/tag is created.
 
 | Gate | Status | Evidence |
 |---|---|---|
-| G1 Architecture documented | PASS | `docs/ARCHITECTURE.md` |
-| G2 Reproducible environment | PASS | `pyproject.toml`, `.env.example`, `Dockerfile` |
-| G3 Deterministic ingestion | PASS | checksum-based `Document.from_content` |
-| G4 Retrieval functional | PASS | `InMemoryStore.search` |
-| G7 Baseline RAG functional | PASS | `POST /v1/query` |
-| G8 Citations validated | PASS | citation objects on grounded answers |
-| G5, G6, G9-G20 | PENDING | later milestones |
+| G5A embedding/vector retrieval | PASS | `DeterministicHashEmbedding`, `VectorStore`, unit tests, benchmark artifact |
+| G5B hybrid retrieval | PASS | explicit `reciprocal_rank_fusion`, unit tests, benchmark artifact |
+| G5C reranking | PASS | `NoOpReranker` and `DeterministicOverlapReranker`, unit tests |
+| G6 evaluation/benchmark | PASS | versioned dataset and `artifacts/benchmarks/m2a-retrieval-v1.json` |
+| M1 lexical control | PASS | existing 7 tests plus full suite; API defaults to lexical |
 
-Known limitation: the current baseline uses an in-memory lexical store and deterministic context echo; it does not yet claim semantic embeddings, LLM generation, Qdrant, MCP or tracing.
+Reproduce with `pytest -q` and `python scripts/run_benchmark.py`. Metrics include Precision, Recall, HitRate, MRR, NDCG, mean latency and p95 latency. Qdrant is provisioned by `docker-compose.yml`; `/v1/retrieval/qdrant-health` reports HTTP 503 explicitly when unavailable.
+
+Limitations: deterministic hash embeddings and overlap reranking are local controls, not trained semantic models. Qdrant health/integration is optional and is not required for the offline benchmark. LangGraph, Agentic RAG, MCP, LLM generation, M2B, tags and releases are out of scope.

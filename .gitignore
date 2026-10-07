@@ -9,3 +9,4 @@ __pycache__/
 *.egg-info/
 artifacts/**/*.json
 !artifacts/**/.gitkeep
+!artifacts/benchmarks/m2a-retrieval-v1.json
