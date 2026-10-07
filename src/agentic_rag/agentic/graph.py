@@ -10,6 +10,8 @@ import re
 import time
 from typing import Literal, TypedDict
 
+from langgraph.graph import END, START, StateGraph
+
 from agentic_rag.generation.baseline import GenerationResult, RetrievalService
 from agentic_rag.generation.provider import LLMProvider, LLMProviderError
 from agentic_rag.retrieval import DeterministicOverlapReranker, VectorStore, hybrid_search
@@ -68,6 +70,8 @@ def _rewrite(query: str) -> str:
     """Make one deterministic retrieval-oriented rewrite, without an LLM."""
     rewritten = re.sub(r"\b(what|where|when|who|why|how|is|are|can|could|please)\b", " ", query, flags=re.IGNORECASE)
     rewritten = re.sub(r"[^\w\s-]", " ", rewritten)
+    rewritten = re.sub(r"\b(storage|stored|storing)\b", "stores", rewritten, flags=re.IGNORECASE)
+    rewritten = re.sub(r"\brefer(?:s|red)?\b", "stores", rewritten, flags=re.IGNORECASE)
     rewritten = " ".join(rewritten.split())
     return rewritten or query
 
@@ -94,6 +98,104 @@ class AgenticRAGGraph:
         self.context_tokens = context_tokens
         self.max_attempts = max_attempts
         self.service = RetrievalService(store, provider, context_tokens)
+        self._compiled = self._build_graph()
+
+    def _build_graph(self):
+        graph = StateGraph(AgenticState)
+        graph.add_node("analyze", self._node_analyze)
+        graph.add_node("retrieve", self._node_retrieve)
+        graph.add_node("evaluate", self._node_evaluate)
+        graph.add_node("rewrite", self._node_rewrite)
+        graph.add_node("generate", self._node_generate)
+        graph.add_node("validate", self._node_validate)
+        graph.add_node("abstain", self._node_abstain)
+        graph.add_edge(START, "analyze")
+        graph.add_conditional_edges("analyze", self._route_after_analyze, {"retrieve": "retrieve", "abstain": "abstain"})
+        graph.add_edge("retrieve", "evaluate")
+        graph.add_conditional_edges("evaluate", self._route_evidence, {"generate": "generate", "rewrite": "rewrite", "abstain": "abstain"})
+        graph.add_edge("rewrite", "retrieve")
+        graph.add_edge("generate", "validate")
+        graph.add_conditional_edges("validate", self._route_validation, {"end": END, "rewrite": "rewrite", "abstain": "abstain"})
+        graph.add_edge("abstain", END)
+        return graph.compile()
+
+    def _node_analyze(self, state: AgenticState) -> AgenticState:
+        analysis = analyze_query(state["original_query"])
+        state["query"] = str(analysis["normalized"])
+        state["strategy"] = analysis["strategy"]  # type: ignore[typeddict-item]
+        self._record(state, "analyze", strategy=state["strategy"], risk=analysis["risk"])
+        if analysis["risk"] == "prompt_injection":
+            state["status"] = "ABSTAINED"
+            state["answer"] = "INSUFFICIENT_CONTEXT"
+            state["error"] = "prompt_injection"
+        return state
+
+    @staticmethod
+    def _route_after_analyze(state: AgenticState) -> str:
+        return "abstain" if state.get("status") == "ABSTAINED" else "retrieve"
+
+    def _node_retrieve(self, state: AgenticState) -> AgenticState:
+        state["attempt"] += 1
+        state["metrics"]["attempts"] = state["attempt"]
+        state["results"] = self._retrieve(state)
+        state["evidence_score"] = self._evidence(state["results"])
+        self._record(state, "retrieve", strategy=state["strategy"], results=len(state["results"]), evidence_score=state["evidence_score"])
+        return state
+
+    def _node_evaluate(self, state: AgenticState) -> AgenticState:
+        if state.get("status") == "ABSTAINED":
+            return state
+        return state
+
+    def _route_evidence(self, state: AgenticState) -> str:
+        if state.get("status") == "ABSTAINED":
+            return "abstain"
+        if state["results"] and state["evidence_score"] > 0.02:
+            return "generate"
+        if state["attempt"] < state["max_attempts"]:
+            return "rewrite"
+        return "abstain"
+
+    def _node_rewrite(self, state: AgenticState) -> AgenticState:
+        state["status"] = "RUNNING"
+        state["query"] = _rewrite(state["query"])
+        state["metrics"]["rewrites"] += 1
+        if state["evidence_score"] <= 0.1 and state["strategy"] != "hybrid":
+            state["strategy"] = "hybrid"
+        self._record(state, "rewrite", query=state["query"], strategy=state["strategy"])
+        return state
+
+    def _node_generate(self, state: AgenticState) -> AgenticState:
+        self.service.context_tokens = state["context_tokens"]
+        try:
+            output: GenerationResult = self.service.generate(state["query"], state["results"], state["strategy"])
+            state["metrics"]["llm_calls"] += 1
+        except LLMProviderError as exc:
+            state["status"] = "PROVIDER_ERROR"
+            state["answer"] = "INSUFFICIENT_CONTEXT"
+            state["error"] = str(exc)
+            return state
+        state.update(answer=output.answer, citations=output.citations, retrieval={"strategy": output.retrieval, "chunks": output.retrieved_chunks, "context_tokens": output.context.token_count}, generation=output.generation, grounding=output.grounding)
+        return state
+
+    def _node_validate(self, state: AgenticState) -> AgenticState:
+        output_status = state.get("status") if state.get("status") == "PROVIDER_ERROR" else ("OK" if state["grounding"]["status"] == "grounded" else "ABSTAINED")
+        state["status"] = output_status
+        self._record(state, "validate", status=output_status, grounding=state.get("grounding", {}).get("status"), citations=len(state.get("citations", [])))
+        return state
+
+    def _route_validation(self, state: AgenticState) -> str:
+        if state["status"] == "OK":
+            return "end"
+        if state["status"] == "PROVIDER_ERROR" or state["attempt"] >= state["max_attempts"]:
+            return "abstain"
+        return "rewrite"
+
+    def _node_abstain(self, state: AgenticState) -> AgenticState:
+        state["status"] = "ABSTAINED" if state.get("status") != "PROVIDER_ERROR" else state["status"]
+        state.setdefault("answer", "INSUFFICIENT_CONTEXT")
+        self._record(state, "abstain", reason=state.get("error", "insufficient_or_invalid_evidence"))
+        return state
 
     def _retrieve(self, state: AgenticState) -> list[SearchResult]:
         query = state["query"]
@@ -125,13 +227,12 @@ class AgenticRAGGraph:
         context_tokens: int | None = None,
     ) -> AgenticState:
         started = time.perf_counter()
-        analysis = analyze_query(query)
         state: AgenticState = {
-            "query": str(analysis["normalized"]),
+            "query": query,
             "original_query": query,
             "attempt": 0,
             "max_attempts": self.max_attempts,
-            "strategy": analysis["strategy"],  # type: ignore[typeddict-item]
+            "strategy": "lexical",
             "results": [],
             "decision_trace": [],
             "metrics": {"attempts": 0, "llm_calls": 0, "rewrites": 0, "latency_ms": 0.0},
@@ -140,61 +241,7 @@ class AgenticRAGGraph:
             "context_tokens": context_tokens or self.context_tokens,
             "status": "RUNNING",
         }
-        self._record(state, "analyze", strategy=state["strategy"], risk=analysis["risk"])
-        if analysis["risk"] == "prompt_injection":
-            state["status"] = "ABSTAINED"
-            state["answer"] = "INSUFFICIENT_CONTEXT"
-            self._record(state, "abstain", reason="prompt_injection")
-            state["metrics"]["latency_ms"] = round((time.perf_counter() - started) * 1000, 3)
-            return state
-
-        for attempt in range(1, self.max_attempts + 1):
-            state["attempt"] = attempt
-            state["metrics"]["attempts"] = attempt
-            results = self._retrieve(state)
-            state["results"] = results
-            state["evidence_score"] = self._evidence(results)
-            self._record(state, "retrieve", strategy=state["strategy"], results=len(results), evidence_score=state["evidence_score"])
-            if not results:
-                if attempt < self.max_attempts:
-                    state["query"] = _rewrite(state["query"])
-                    state["metrics"]["rewrites"] += 1
-                    self._record(state, "rewrite", query=state["query"])
-                    continue
-                state["status"] = "ABSTAINED"
-                state["answer"] = "INSUFFICIENT_CONTEXT"
-                self._record(state, "abstain", reason="no_evidence")
-                break
-
-            self.service.context_tokens = state["context_tokens"]
-            try:
-                output: GenerationResult = self.service.generate(state["query"], results, state["strategy"])
-                state["metrics"]["llm_calls"] += 1
-            except LLMProviderError as exc:
-                state["status"] = "PROVIDER_ERROR"
-                state["answer"] = "INSUFFICIENT_CONTEXT"
-                state["error"] = str(exc)
-                self._record(state, "abstain", reason="provider_failure")
-                break
-            state.update(
-                answer=output.answer,
-                citations=output.citations,
-                retrieval={"strategy": output.retrieval, "chunks": output.retrieved_chunks, "context_tokens": output.context.token_count},
-                generation=output.generation,
-                grounding=output.grounding,
-            )
-            self._record(state, "validate", status=output.status, grounding=output.grounding["status"], citations=len(output.citations))
-            if output.status == "OK" and output.grounding["status"] == "grounded":
-                state["status"] = "OK"
-                break
-            state["status"] = "ABSTAINED"
-            if attempt < self.max_attempts and output.status != "INSUFFICIENT_CONTEXT":
-                state["query"] = _rewrite(state["query"])
-                state["metrics"]["rewrites"] += 1
-                self._record(state, "rewrite", query=state["query"], reason="invalid_evidence")
-                continue
-            self._record(state, "abstain", reason="citation_or_grounding_failure")
-            break
+        state = self._compiled.invoke(state)
         state["metrics"]["latency_ms"] = round((time.perf_counter() - started) * 1000, 3)
         return state
 
