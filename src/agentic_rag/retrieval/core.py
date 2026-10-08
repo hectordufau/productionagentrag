@@ -52,7 +52,7 @@ def reciprocal_rank_fusion(*rankings: list[SearchResult], limit: int = 5, k: int
     return sorted(output, key=lambda r: (-r.score, r.chunk.chunk_id))[:limit]
 
 
-def hybrid_search(lexical: ChunkSearcher, vector: VectorStore, query: str, limit: int = 5,
+def hybrid_search(lexical: ChunkSearcher, vector: Any, query: str, limit: int = 5,
                   metadata_filter: dict[str, Any] | None = None) -> list[SearchResult]:
     return reciprocal_rank_fusion(
         lexical.search(query, limit, metadata_filter),

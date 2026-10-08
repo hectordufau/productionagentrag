@@ -8,14 +8,14 @@ from __future__ import annotations
 
 import re
 import time
-from typing import Literal, TypedDict
+from typing import Any, Literal, TypedDict
 
 from langgraph.graph import END, START, StateGraph
 
 from agentic_rag.generation.baseline import GenerationResult, RetrievalService
 from agentic_rag.generation.provider import LLMProvider, LLMProviderError
 from agentic_rag.mcp.client import MCPToolClient, MCPToolError
-from agentic_rag.retrieval import DeterministicOverlapReranker, VectorStore, hybrid_search
+from agentic_rag.retrieval import DeterministicOverlapReranker, hybrid_search
 from agentic_rag.storage.models import SearchResult
 from agentic_rag.storage.store import InMemoryStore
 
@@ -111,7 +111,7 @@ class AgenticRAGGraph:
     def __init__(
         self,
         store: InMemoryStore,
-        vector_store: VectorStore,
+        vector_store: Any,
         provider: LLMProvider | None,
         *,
         reranker: DeterministicOverlapReranker | None = None,

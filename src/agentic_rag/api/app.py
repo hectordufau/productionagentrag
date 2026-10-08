@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+import time
 from typing import Literal
 from uuid import uuid4
 
@@ -15,9 +17,13 @@ from agentic_rag.generation.provider import (
     LLMUnavailableError,
     OllamaProvider,
 )
+from agentic_rag.mcp.client import MCPToolClient
+from agentic_rag.mcp.server import create_mcp_server
 from agentic_rag.retrieval import (
     DeterministicHashEmbedding,
     DeterministicOverlapReranker,
+    QdrantVectorStore,
+    SentenceTransformerEmbedding,
     VectorStore,
     hybrid_search,
 )
@@ -27,12 +33,22 @@ from agentic_rag.storage.store import InMemoryStore
 
 app = FastAPI(title="Production Agentic RAG", version="0.1.0")
 store = InMemoryStore()
-vector_store = VectorStore(DeterministicHashEmbedding())
-provider = OllamaProvider()
+embedding_mode = os.getenv("EMBEDDING_PROVIDER", "deterministic").lower()
+backend = os.getenv("RETRIEVAL_BACKEND", "memory").lower()
+if embedding_mode in {"sentence-transformers", "sentence_transformers", "semantic"}:
+    embedding = SentenceTransformerEmbedding(os.getenv("EMBEDDING_MODEL", SentenceTransformerEmbedding.name), os.getenv("EMBEDDING_DEVICE"))
+else:
+    embedding = DeterministicHashEmbedding(int(os.getenv("EMBEDDING_DIMENSION", "128")))
+qdrant_client = QdrantClient(os.getenv("QDRANT_URL", "http://localhost:6333"), float(os.getenv("QDRANT_TIMEOUT_S", "2")))
+if backend == "qdrant":
+    vector_store = QdrantVectorStore(embedding, qdrant_client, os.getenv("QDRANT_COLLECTION", "rag_chunks"))
+else:
+    vector_store = VectorStore(embedding)
+provider = OllamaProvider(base_url=os.getenv("OLLAMA_URL", "http://127.0.0.1:11434"), model=os.getenv("OLLAMA_MODEL", "qwen2.5:3b"))
 service = RetrievalService(store, provider)
 reranker = DeterministicOverlapReranker()
-agentic_graph = AgenticRAGGraph(store, vector_store, provider, reranker=reranker)
-
+mcp_client = MCPToolClient(create_mcp_server(store)) if os.getenv("MCP_ENABLED", "true").lower() in {"1", "true", "yes"} else None
+agentic_graph = AgenticRAGGraph(store, vector_store, provider, reranker=reranker, mcp_client=mcp_client)
 
 class IngestRequest(BaseModel):
     source: str
@@ -40,7 +56,6 @@ class IngestRequest(BaseModel):
     mime_type: str = "text/plain"
     content: str = Field(min_length=1)
     metadata: dict[str, object] = Field(default_factory=dict)
-
 
 class QueryRequest(BaseModel):
     query: str = Field(min_length=1)
@@ -51,29 +66,29 @@ class QueryRequest(BaseModel):
     mode: Literal["baseline", "agentic"] = "baseline"
     context_tokens: int = Field(default=1800, ge=1, le=12000)
 
-
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
 
-
 @app.get("/ready")
-def ready() -> dict[str, str]:
+def ready() -> dict[str, object]:
+    if backend == "qdrant":
+        try:
+            qdrant_client.health()
+        except QdrantUnavailable as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
     return {"status": "ready"}
-
 
 @app.get("/version")
 def version() -> dict[str, str]:
     return {"version": app.version}
 
-
 @app.get("/v1/retrieval/qdrant-health")
 def qdrant_health() -> dict[str, object]:
     try:
-        return {"status": "available", "detail": QdrantClient().health()}
+        return {"status": "available", "detail": qdrant_client.health()}
     except QdrantUnavailable as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
-
 
 @app.post("/v1/ingest")
 def ingest(request: IngestRequest) -> dict[str, object]:
@@ -85,52 +100,35 @@ def ingest(request: IngestRequest) -> dict[str, object]:
     vector_store.add_chunks(chunks)
     return {"document_id": document.document_id, "duplicate": False, "chunks": len(chunks)}
 
-
 def _retrieved(request: QueryRequest):
-    if request.retrieval == "lexical":
-        return store.search(request.query, request.limit, request.metadata_filter)
-    if request.retrieval == "vector":
-        return vector_store.search(request.query, request.limit, request.metadata_filter)
+    if request.retrieval == "lexical": return store.search(request.query, request.limit, request.metadata_filter)
+    if request.retrieval == "vector": return vector_store.search(request.query, request.limit, request.metadata_filter)
     results = hybrid_search(store, vector_store, request.query, request.limit, request.metadata_filter)
     return reranker.rerank(request.query, results, request.limit) if request.retrieval == "hybrid+reranking" else results
 
+def _base_fields(trace_id: str, strategy: str, started: float) -> dict[str, object]:
+    return {"trace_id": trace_id, "strategy": strategy, "attempts": 0, "rewrites": [], "mcp_calls": 0, "llm_calls": 0, "latency": {"retrieval_ms": 0.0, "generation_ms": 0.0, "total_ms": round((time.perf_counter()-started)*1000, 3)}, "errors": []}
 
 @app.post("/v1/query")
 def query(request: QueryRequest) -> dict[str, object]:
-    trace_id = uuid4().hex
+    started = time.perf_counter(); trace_id = uuid4().hex
     if request.mode == "agentic":
-        result = agentic_graph.run(
-            request.query,
-            limit=request.limit,
-            metadata_filter=request.metadata_filter,
-            context_tokens=request.context_tokens,
-        )
-        return {
-            "status": result["status"],
-            "answer": result.get("answer", "INSUFFICIENT_CONTEXT"),
-            "citations": result.get("citations", []),
-            "retrieval": result.get("retrieval", {"strategy": result["strategy"], "chunks": []}),
-            "generation": result.get("generation", {"status": "not_run"}),
-            "grounding": result.get("grounding", {"status": "unsupported"}),
-            "latency": {"total_ms": result["metrics"]["latency_ms"]},
-            "metrics": result["metrics"],
-            "decision_trace": result["decision_trace"],
-            "trace_id": trace_id,
-            "grounded": result["status"] == "OK",
-            "retrieved_chunks": [item.chunk.chunk_id for item in result.get("results", [])],
-        }
-    results = _retrieved(request)
+        result = agentic_graph.run(request.query, limit=request.limit, metadata_filter=request.metadata_filter, context_tokens=request.context_tokens)
+        metrics = result["metrics"]
+        return {"status": result["status"], "answer": result.get("answer", "INSUFFICIENT_CONTEXT"), "citations": result.get("citations", []), "retrieval": result.get("retrieval", {"strategy": result["strategy"], "chunks": []}), "generation": result.get("generation", {"status": "not_run"}), "grounding": result.get("grounding", {"status": "unsupported"}), "latency": {"total_ms": metrics["latency_ms"]}, "metrics": metrics, "decision_trace": result["decision_trace"], "trace_id": trace_id, "strategy": result["strategy"], "attempts": metrics["attempts"], "rewrites": [x for x in result["decision_trace"] if x["node"] == "rewrite"], "mcp_calls": metrics["tool_calls"], "llm_calls": metrics["llm_calls"], "grounded": result["status"] == "OK", "retrieved_chunks": [item.chunk.chunk_id for item in result.get("results", [])], "errors": [result["error"]] if result.get("error") else []}
+    results = _retrieved(request); fields = _base_fields(trace_id, request.retrieval, started)
+    fields["latency"]["retrieval_ms"] = round((time.perf_counter()-started)*1000, 3)
+    fields["attempts"] = 1
     if not results:
-        return {"status": "INSUFFICIENT_CONTEXT", "answer": "INSUFFICIENT_CONTEXT", "citations": [], "retrieval": {"strategy": request.retrieval, "chunks": []}, "generation": {"status": "not_run"}, "grounding": {"status": "unsupported"}, "latency": {"total_ms": 0}, "trace_id": trace_id}
+        return {"status": "INSUFFICIENT_CONTEXT", "answer": "INSUFFICIENT_CONTEXT", "citations": [], "retrieval": {"strategy": request.retrieval, "chunks": []}, "generation": {"status": "not_run"}, "grounding": {"status": "unsupported"}, "grounded": False, "retrieved_chunks": [], **fields}
+    citations = [{"document_id": r.chunk.document_id, "chunk_id": r.chunk.chunk_id, "source": r.chunk.metadata.get("source"), "filename": r.chunk.metadata.get("filename"), "score": r.score} for r in results]
     if not request.generate:
-        return {"status": "OK", "answer": " ".join(r.chunk.content for r in results), "citations": [{"document_id": r.chunk.document_id, "chunk_id": r.chunk.chunk_id, "source": r.chunk.metadata.get("source"), "filename": r.chunk.metadata.get("filename"), "score": r.score} for r in results], "retrieval": {"strategy": request.retrieval, "chunks": [r.chunk.chunk_id for r in results]}, "generation": {"status": "not_run"}, "grounding": {"status": "grounded"}, "latency": {"total_ms": 0}, "trace_id": trace_id, "grounded": True, "retrieved_chunks": [r.chunk.chunk_id for r in results]}
+        return {"status": "OK", "answer": " ".join(r.chunk.content for r in results), "citations": citations, "retrieval": {"strategy": request.retrieval, "chunks": [r.chunk.chunk_id for r in results]}, "generation": {"status": "not_run"}, "grounding": {"status": "grounded"}, "grounded": True, "retrieved_chunks": [r.chunk.chunk_id for r in results], **fields}
     service.context_tokens = request.context_tokens
-    try:
-        output = service.generate(request.query, results, request.retrieval)
-    except LLMTimeoutError as exc:
-        raise HTTPException(status_code=504, detail={"code": "LLM_TIMEOUT", "message": str(exc), "trace_id": trace_id}) from exc
-    except LLMUnavailableError as exc:
-        raise HTTPException(status_code=503, detail={"code": "LLM_UNAVAILABLE", "message": str(exc), "trace_id": trace_id}) from exc
-    except LLMProviderError as exc:
-        raise HTTPException(status_code=502, detail={"code": "LLM_PROVIDER_ERROR", "message": str(exc), "trace_id": trace_id}) from exc
-    return {"status": output.status, "answer": output.answer, "citations": output.citations, "retrieval": {"strategy": output.retrieval, "chunks": output.retrieved_chunks, "context_tokens": output.context.token_count}, "generation": output.generation, "grounding": output.grounding, "latency": {"total_ms": output.latency_ms}, "trace_id": trace_id, "grounded": output.grounding["status"] == "grounded", "retrieved_chunks": output.retrieved_chunks}
+    try: output = service.generate(request.query, results, request.retrieval)
+    except LLMTimeoutError as exc: raise HTTPException(status_code=504, detail={"code": "LLM_TIMEOUT", "message": str(exc), "trace_id": trace_id}) from exc
+    except LLMUnavailableError as exc: raise HTTPException(status_code=503, detail={"code": "LLM_UNAVAILABLE", "message": str(exc), "trace_id": trace_id}) from exc
+    except LLMProviderError as exc: raise HTTPException(status_code=502, detail={"code": "LLM_PROVIDER_ERROR", "message": str(exc), "trace_id": trace_id}) from exc
+    fields["llm_calls"] = 1; fields["latency"]["generation_ms"] = output.latency_ms
+    fields["latency"]["total_ms"] = round((time.perf_counter()-started)*1000, 3)
+    return {"status": output.status, "answer": output.answer, "citations": output.citations, "retrieval": {"strategy": output.retrieval, "chunks": output.retrieved_chunks, "context_tokens": output.context.token_count}, "generation": output.generation, "grounding": output.grounding, "grounded": output.grounding["status"] == "grounded", "retrieved_chunks": output.retrieved_chunks, **fields}

@@ -27,7 +27,7 @@ The project is an engineering reference, not a hosted service or a claim of mode
 
 ## Quick start
 
-Requirements: Python `>=3.12`. The default API uses in-memory stores. Qdrant is an optional local service for the HTTP adapter and integration coverage.
+Requirements: Python `>=3.12`. The default API uses the explicit deterministic/in-memory control (`RETRIEVAL_BACKEND=memory`, `EMBEDDING_PROVIDER=deterministic`). Production wiring is opt-in: `RETRIEVAL_BACKEND=qdrant` with `EMBEDDING_PROVIDER=sentence-transformers` uses persistent Qdrant and `all-MiniLM-L6-v2` (384 dimensions).
 
 ```bash
 python -m pip install -e '.[dev]'
@@ -50,16 +50,25 @@ curl -X POST http://localhost:8000/v1/query \\
 
 The default query is baseline lexical retrieval with `generate:false`. With evidence, it returns the retrieved text and chunk citations; without evidence, it returns `INSUFFICIENT_CONTEXT` and does not call an LLM.
 
-For local generation, make Ollama available, verify the configured model, and request generation explicitly:
+For local generation, pull the verified default model, make Ollama available, and request generation explicitly:
 
 ```bash
+ollama pull qwen2.5:3b
 ollama list
 curl -X POST http://localhost:8000/v1/query \\
   -H 'content-type: application/json' \\
   -d '{"query":"Where are vectors stored?","retrieval":"hybrid","generate":true}'
 ```
 
-The provider uses `num_ctx=2048`, `num_predict=256`, and temperature `0`. No fake or deterministic answer is substituted when Ollama is unavailable or times out.
+The application default is verified in `src/agentic_rag/api/app.py` as `qwen2.5:3b` and `http://127.0.0.1:11434`. Ollama requests explicitly set `num_ctx=2048`, `num_predict=256`, temperature `0`, and `think=false`. Override with `OLLAMA_MODEL`/`OLLAMA_URL`; no fake answer is substituted when Ollama is unavailable.
+
+Production-style Compose configuration (persistent Qdrant volume; deterministic control remains explicit):
+
+```bash
+RETRIEVAL_BACKEND=qdrant EMBEDDING_PROVIDER=sentence-transformers docker compose up --build
+```
+
+Useful environment variables are `RETRIEVAL_BACKEND`, `EMBEDDING_PROVIDER`, `EMBEDDING_MODEL`, `QDRANT_URL`, `QDRANT_COLLECTION`, `OLLAMA_URL`, `OLLAMA_MODEL`, and `MCP_ENABLED`. `/ready` checks Qdrant when the Qdrant backend is selected.
 
 ## What is implemented
 
@@ -370,7 +379,7 @@ O projeto é uma referência de engenharia, não um serviço hospedado nem uma a
 
 ## Início rápido
 
-Requisito: Python `>=3.12`. A API padrão usa armazenamentos em memória. Qdrant é um serviço local opcional para o adaptador HTTP e os testes de integração.
+Requisito: Python `>=3.12`. A API padrão usa explicitamente o controle determinístico/em memória (`RETRIEVAL_BACKEND=memory`, `EMBEDDING_PROVIDER=deterministic`). A integração de produção é opt-in: `RETRIEVAL_BACKEND=qdrant` com `EMBEDDING_PROVIDER=sentence-transformers` usa Qdrant persistente e `all-MiniLM-L6-v2` (384 dimensões).
 
 ```bash
 python -m pip install -e '.[dev]'
@@ -393,16 +402,25 @@ curl -X POST http://localhost:8000/v1/query \\
 
 A consulta padrão usa recuperação lexical baseline com `generate:false`. Com evidência, retorna o texto recuperado e citações dos chunks; sem evidência, retorna `INSUFFICIENT_CONTEXT` e não chama um LLM.
 
-Para geração local, disponibilize o Ollama, verifique o modelo configurado e peça geração explicitamente:
+Para geração local, baixe o modelo padrão verificado, disponibilize o Ollama e peça a geração explicitamente:
 
 ```bash
+ollama pull qwen2.5:3b
 ollama list
 curl -X POST http://localhost:8000/v1/query \\
   -H 'content-type: application/json' \\
   -d '{"query":"Where are vectors stored?","retrieval":"hybrid","generate":true}'
 ```
 
-O provedor usa `num_ctx=2048`, `num_predict=256` e temperatura `0`. Quando o Ollama está indisponível ou expira, nenhuma resposta falsa ou determinística é usada como substituição.
+O default da aplicação foi verificado em `src/agentic_rag/api/app.py` como `qwen2.5:3b` e `http://127.0.0.1:11434`. As requisições Ollama definem explicitamente `num_ctx=2048`, `num_predict=256`, temperatura `0` e `think=false`. Use `OLLAMA_MODEL`/`OLLAMA_URL` para substituir; nenhuma resposta falsa é usada quando o Ollama está indisponível.
+
+Configuração Compose de produção (volume persistente do Qdrant; o controle determinístico continua explícito):
+
+```bash
+RETRIEVAL_BACKEND=qdrant EMBEDDING_PROVIDER=sentence-transformers docker compose up --build
+```
+
+Variáveis úteis: `RETRIEVAL_BACKEND`, `EMBEDDING_PROVIDER`, `EMBEDDING_MODEL`, `QDRANT_URL`, `QDRANT_COLLECTION`, `OLLAMA_URL`, `OLLAMA_MODEL` e `MCP_ENABLED`. `/ready` verifica o Qdrant quando o backend Qdrant é selecionado.
 
 ## O que está implementado
 
