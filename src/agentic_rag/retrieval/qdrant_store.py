@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import uuid
 from typing import Any
 
 from agentic_rag.storage.models import Chunk, SearchResult
@@ -21,7 +22,11 @@ class QdrantVectorStore:
     def add_chunks(self, chunks: list[Chunk]) -> None:
         points = []
         for chunk in chunks:
-            points.append({"id": chunk.chunk_id, "vector": self.embedding_provider.embed(chunk.content), "payload": {"chunk": chunk.content, "position": chunk.position, "document_id": chunk.document_id, "chunk_id": chunk.chunk_id, **chunk.metadata}})
+            # Qdrant accepts only unsigned integer or UUID point IDs. Keep the
+            # human-readable chunk ID in payload and derive a stable UUID for
+            # the storage key so repeated ingestion remains idempotent.
+            point_id = str(uuid.uuid5(uuid.NAMESPACE_URL, f"production-agentic-rag:{chunk.chunk_id}"))
+            points.append({"id": point_id, "vector": self.embedding_provider.embed(chunk.content), "payload": {"chunk": chunk.content, "position": chunk.position, "document_id": chunk.document_id, "chunk_id": chunk.chunk_id, **chunk.metadata}})
         if points:
             self.client.upsert_vectors(self.collection, points)
 

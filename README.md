@@ -227,7 +227,7 @@ Run the real integration smoke with:
 PYTHONPATH=src .venv-semantic-cpu/bin/python scripts/run_integration_smoke.py
 ```
 
-The smoke requires Qdrant at `127.0.0.1:6333`, SentenceTransformers `all-MiniLM-L6-v2`, Ollama `qwen2.5:3b`, and MCP. In the v1.1 run Qdrant was not listening, so the script stopped before semantic retrieval and recorded that limitation; it never falls back to the deterministic store.
+The smoke requires Qdrant at `127.0.0.1:6333`, SentenceTransformers `all-MiniLM-L6-v2`, Ollama `qwen2.5:3b`, and MCP. The v1.1 smoke completed against live Qdrant, SentenceTransformers, Ollama, and MCP. Qdrant point IDs are stored as stable UUIDs while human-readable chunk IDs remain in payload; the script never falls back to the deterministic store.
 
 ## Security and failure boundaries
 
@@ -587,7 +587,7 @@ Execute o smoke de integração real com:
 PYTHONPATH=src .venv-semantic-cpu/bin/python scripts/run_integration_smoke.py
 ```
 
-O smoke exige Qdrant em `127.0.0.1:6333`, SentenceTransformers `all-MiniLM-L6-v2`, Ollama `qwen2.5:3b` e MCP. Na execução v1.1, o Qdrant não estava escutando; o script parou antes da recuperação semântica e registrou essa limitação, sem fallback para o armazenamento determinístico.
+O smoke exige Qdrant em `127.0.0.1:6333`, SentenceTransformers `all-MiniLM-L6-v2`, Ollama `qwen2.5:3b` e MCP. O smoke v1.1 foi concluído contra Qdrant, SentenceTransformers, Ollama e MCP reais. Os IDs dos pontos no Qdrant usam UUIDs estáveis, enquanto os IDs legíveis dos chunks permanecem no payload; o script não faz fallback para o armazenamento determinístico.
 
 ## Limites de segurança e falha
 

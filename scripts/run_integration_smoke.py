@@ -11,6 +11,7 @@ import sys
 from typing import Any
 
 from agentic_rag.chunking.core import chunk_document
+from agentic_rag.generation.baseline import RetrievalService
 from agentic_rag.generation.provider import LLMProviderError, OllamaProvider
 from agentic_rag.mcp.client import MCPToolClient
 from agentic_rag.mcp.server import create_mcp_server
@@ -43,14 +44,22 @@ def main() -> int:
     store.add_chunks(chunks)
     vector_store = QdrantVectorStore(embedding, client, "rag_smoke_v1")
     vector_store.add_chunks(chunks)
-    hits = vector_store.search("where are vectors stored", 1)
+    hits = vector_store.search("What does Qdrant store?", 1)
     result["checks"]["semantic_retrieval"] = {"count": len(hits), "chunk_ids": [hit.chunk.chunk_id for hit in hits]}
 
     provider = OllamaProvider(base_url="http://127.0.0.1:11434", model="qwen2.5:3b")
     try:
-        response = provider.generate("Answer exactly: Qdrant stores vectors. [chunk_id=smoke]", timeout_s=30)
+        generation = RetrievalService(InMemoryStore(), provider=provider).generate("What does Qdrant store?", hits, "qdrant")
         result["services"]["ollama"] = "available"
-        result["checks"]["ollama"] = {"status": "ok", "model": response.model, "answer": response.answer}
+        result["checks"]["ollama"] = {
+            "status": generation.status,
+            "answer": generation.answer,
+            "citations": generation.citations,
+            "grounding": generation.grounding,
+            "model": generation.generation.get("model"),
+        }
+        if generation.status != "OK" or not generation.citations:
+            result["limitations"].append("Grounded generation did not return a validated citation")
     except LLMProviderError as exc:  # expose provider limitations, never fake success
         result["services"]["ollama"] = "blocked"
         result["limitations"].append(f"Ollama generation failed: {type(exc).__name__}: {exc}")
