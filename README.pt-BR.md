@@ -2,7 +2,7 @@
 
 **Uma implementação prática para construir e avaliar aplicações de IA que respondem perguntas utilizando informações recuperadas de documentos.**
 
-[English README](README.md) · [Documentação técnica](docs/TECHNICAL.md) · [Repositório](https://github.com/hectordufau/productionagentrag) · [Release v1.0.0](https://github.com/hectordufau/productionagentrag/releases/tag/v1.0.0)
+[English README](README.md) · [Documentação técnica](docs/TECHNICAL.md) · [Repositório](https://github.com/hectordufau/productionagentrag) · [Release v1.1.0](https://github.com/hectordufau/productionagentrag/releases/tag/v1.1.0) · [Release v1.0.0](https://github.com/hectordufau/productionagentrag/releases/tag/v1.0.0)
 
 ## Por que este projeto existe
 

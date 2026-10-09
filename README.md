@@ -2,7 +2,7 @@
 
 **A practical reference implementation for building and evaluating AI applications that answer questions using retrieved information.**
 
-[Português (Brasil)](README.pt-BR.md) · [Technical documentation](docs/TECHNICAL.md) · [Repository](https://github.com/hectordufau/productionagentrag) · [v1.0.0 release](https://github.com/hectordufau/productionagentrag/releases/tag/v1.0.0)
+[Português (Brasil)](README.pt-BR.md) · [Technical documentation](docs/TECHNICAL.md) · [Repository](https://github.com/hectordufau/productionagentrag) · [v1.1.0 release](https://github.com/hectordufau/productionagentrag/releases/tag/v1.1.0) · [v1.0.0 release](https://github.com/hectordufau/productionagentrag/releases/tag/v1.0.0)
 
 ## Why this project exists
 
