@@ -1,6 +1,11 @@
 from agentic_rag.chunking.core import chunk_document
 from agentic_rag.generation.baseline import RetrievalService
-from agentic_rag.generation.grounding import build_context, grounded_prompt, validate_citations
+from agentic_rag.generation.grounding import (
+    build_context,
+    grounded_prompt,
+    infer_citations,
+    validate_citations,
+)
 from agentic_rag.generation.provider import LLMResponse
 from agentic_rag.storage.models import Document
 from agentic_rag.storage.store import InMemoryStore
@@ -39,3 +44,10 @@ def test_generation_keeps_provider_and_usage_separate_from_grounding():
     assert output.generation["provider"] == "test"
     assert output.generation["total_tokens"] == 3
     assert output.grounding["status"] in {"grounded", "partially_grounded"}
+
+
+def test_infer_citations_accepts_fully_supported_uncited_answer():
+    doc = Document.from_content("s", "a.txt", "text/plain", "Qdrant stores vectors in a collection.")
+    result = type("R", (), {"chunk": chunk_document(doc)[0], "score": 1.0, "method": "keyword"})()
+    context = build_context([result])
+    assert infer_citations("Qdrant stores vectors in a collection.", context) == [result.chunk.chunk_id]

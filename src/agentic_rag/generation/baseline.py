@@ -7,6 +7,7 @@ from agentic_rag.generation.grounding import (
     Context,
     build_context,
     grounded_prompt,
+    infer_citations,
     validate_citations,
     validate_grounding,
 )
@@ -48,8 +49,16 @@ class RetrievalService:
             raise RuntimeError("LLM provider is required for generation")
         response: LLMResponse = self.provider.generate(grounded_prompt(query, context), timeout_s=120.0)
         valid, invalid = validate_citations(response.answer, context)
-        grounding = validate_grounding(response.answer, context, valid, invalid)
-        status = "INSUFFICIENT_CONTEXT" if response.answer.strip().upper() == "INSUFFICIENT_CONTEXT" else ("OK" if not invalid else "UNSUPPORTED_CITATION")
+        if not valid and not invalid and response.answer.strip().upper() != "INSUFFICIENT_CONTEXT":
+            valid = infer_citations(response.answer, context)
+            if valid:
+                answer = response.answer.rstrip() + " " + " ".join(f"[chunk_id={chunk_id}]" for chunk_id in valid)
+            else:
+                answer = response.answer
+        else:
+            answer = response.answer
+        grounding = validate_grounding(answer, context, valid, invalid)
+        status = "INSUFFICIENT_CONTEXT" if answer.strip().upper() == "INSUFFICIENT_CONTEXT" else ("OK" if not invalid else "UNSUPPORTED_CITATION")
         citations = [{"document_id": r.chunk.document_id, "chunk_id": r.chunk.chunk_id, "source": r.chunk.metadata.get("source"), "filename": r.chunk.metadata.get("filename"), "score": r.score} for r in context.chunks if r.chunk.chunk_id in valid]
         total = ( __import__("time").perf_counter() - started) * 1000
-        return GenerationResult(response.answer, citations, [r.chunk.chunk_id for r in context.chunks], status, retrieval, {"status": "ok", "provider": response.provider, "model": response.model, "latency_ms": response.latency_ms, "prompt_tokens": response.prompt_tokens, "completion_tokens": response.completion_tokens, "total_tokens": response.total_tokens}, {"status": grounding.status, "supported_claims": grounding.supported_claims, "unsupported_claims": grounding.unsupported_claims}, total, context)
+        return GenerationResult(answer, citations, [r.chunk.chunk_id for r in context.chunks], status, retrieval, {"status": "ok", "provider": response.provider, "model": response.model, "latency_ms": response.latency_ms, "prompt_tokens": response.prompt_tokens, "completion_tokens": response.completion_tokens, "total_tokens": response.total_tokens}, {"status": grounding.status, "supported_claims": grounding.supported_claims, "unsupported_claims": grounding.unsupported_claims}, total, context)

@@ -76,6 +76,44 @@ def validate_citations(answer: str, context: Context) -> tuple[list[str], list[s
     return valid, invalid
 
 
+_GROUNDING_STOPWORDS = {
+    "a", "an", "and", "are", "as", "at", "be", "but", "by", "for", "from", "in", "is",
+    "it", "of", "on", "or", "that", "the", "their", "this", "to", "was", "with",
+}
+
+
+def infer_citations(answer: str, context: Context) -> list[str]:
+    """Infer conservative citations when a model omits the required brackets.
+
+    Inference is accepted only when every answer sentence has at least two
+    non-stopword tokens in one sent chunk.  This preserves fail-closed
+    behavior for unsupported or generic answers while recovering provenance
+    for verbatim grounded answers from citation-weak local models.
+    """
+    clean = re.sub(r"\[(?:chunk_id=)?[A-Za-z0-9_.:/-]{8,}\]", "", answer)
+    sentences = [sentence.strip() for sentence in re.split(r"[.!?\n]+", clean) if sentence.strip()]
+    if not sentences:
+        return []
+    sentence_tokens = [
+        {token for token in re.findall(r"[a-z0-9]{3,}", sentence.lower()) if token not in _GROUNDING_STOPWORDS}
+        for sentence in sentences
+    ]
+    if any(len(tokens) < 2 for tokens in sentence_tokens):
+        return []
+    selected: list[str] = []
+    for tokens in sentence_tokens:
+        matches = [
+            result for result in context.chunks
+            if len(tokens & set(re.findall(r"[a-z0-9]{3,}", result.chunk.content.lower()))) >= 2
+        ]
+        if not matches:
+            return []
+        best = max(matches, key=lambda result: (len(tokens & set(re.findall(r"[a-z0-9]{3,}", result.chunk.content.lower()))), -context.chunks.index(result)))
+        if best.chunk.chunk_id not in selected:
+            selected.append(best.chunk.chunk_id)
+    return selected
+
+
 def validate_grounding(answer: str, context: Context, citations: list[str], invalid: list[str]) -> GroundingResult:
     if invalid:
         return GroundingResult("unsupported", 0, 1, False)

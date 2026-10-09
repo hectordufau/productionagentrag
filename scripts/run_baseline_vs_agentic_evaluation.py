@@ -21,7 +21,8 @@ from agentic_rag.storage.store import InMemoryStore
 
 ROOT = Path(__file__).resolve().parents[1]
 DATASET = ROOT / "datasets/generation-eval-v2.json"
-OUTPUT = ROOT / "artifacts/benchmarks/baseline-vs-agentic-v2.json"
+OUTPUT = ROOT / "artifacts/benchmarks/baseline-vs-agentic-v1.1.json"
+BEFORE = ROOT / "artifacts/benchmarks/baseline-vs-agentic-v2.json"
 MODEL = "qwen2.5:3b"
 GENERATION = {"num_ctx": 2048, "num_predict": 256, "temperature": 0, "think": False}
 
@@ -129,7 +130,13 @@ def main() -> int:
     cases = fixture["cases"]
     baseline = run_baseline(cases, store, chunks, ids)
     agentic = run_agentic(cases, store, chunks, ids)
-    result = {"version": "baseline-vs-agentic-v2", "dataset": {"path": str(DATASET.relative_to(ROOT)), "sha256": hashlib.sha256(DATASET.read_bytes()).hexdigest(), "corpus_sha256": hashlib.sha256(json.dumps(fixture["corpus"], sort_keys=True, separators=(",", ":")).encode()).hexdigest(), "cases": len(cases)}, "provider": {"name": "ollama", "model": MODEL, "timeout_s": 120, "generation": GENERATION}, "strategies": {"baseline": {"cases": baseline, "aggregate": aggregate(baseline, cases)}, "agentic": {"cases": agentic, "aggregate": aggregate(agentic, cases)}}, "limitations": ["Fact and source scoring is deterministic substring/citation scoring; no sole LLM judge.", "CPU local-model latency is hardware-dependent."]}
+    result = {"version": "baseline-vs-agentic-v1.1", "dataset": {"path": str(DATASET.relative_to(ROOT)), "sha256": hashlib.sha256(DATASET.read_bytes()).hexdigest(), "corpus_sha256": hashlib.sha256(json.dumps(fixture["corpus"], sort_keys=True, separators=(",", ":")).encode()).hexdigest(), "cases": len(cases)}, "provider": {"name": "ollama", "model": MODEL, "timeout_s": 120, "generation": GENERATION}, "strategies": {"baseline": {"cases": baseline, "aggregate": aggregate(baseline, cases)}, "agentic": {"cases": agentic, "aggregate": aggregate(agentic, cases)}}, "before": json.loads(BEFORE.read_text())["strategies"], "regressions": [], "limitations": ["Fact and source scoring is deterministic substring/citation scoring; no sole LLM judge.", "CPU local-model latency is hardware-dependent."]}
+    for strategy in ("baseline", "agentic"):
+        before = result["before"][strategy]["aggregate"]
+        after = result["strategies"][strategy]["aggregate"]
+        for metric in ("quality", "fact_recall", "source_precision", "source_recall", "abstention_accuracy"):
+            if float(after[metric]) < float(before[metric]):
+                result["regressions"].append({"strategy": strategy, "metric": metric, "before": before[metric], "after": after[metric]})
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({"artifact": str(OUTPUT.relative_to(ROOT)), "dataset_sha256": result["dataset"]["sha256"], "baseline": result["strategies"]["baseline"]["aggregate"], "agentic": result["strategies"]["agentic"]["aggregate"]}, indent=2))

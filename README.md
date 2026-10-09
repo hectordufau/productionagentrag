@@ -219,7 +219,15 @@ Run it with:
 PYTHONPATH=src .venv-semantic-cpu/bin/python scripts/run_baseline_vs_agentic_evaluation.py
 ```
 
-The complete per-case, aggregate, category, latency, attempt/rewrite/call, strategy, and error record is checked in at `artifacts/benchmarks/baseline-vs-agentic-v2.json`.
+Version 1.1 keeps the frozen dataset/corpus and writes a new per-case comparison to `artifacts/benchmarks/baseline-vs-agentic-v1.1.json`; the artifact includes the v2 before-values and explicit regression entries. The grounding path now conservatively infers and appends chunk citations only when every answer sentence has at least two non-stopword tokens supported by a sent chunk. Unsupported or generic answers still fail closed.
+
+Run the real integration smoke with:
+
+```bash
+PYTHONPATH=src .venv-semantic-cpu/bin/python scripts/run_integration_smoke.py
+```
+
+The smoke requires Qdrant at `127.0.0.1:6333`, SentenceTransformers `all-MiniLM-L6-v2`, Ollama `qwen2.5:3b`, and MCP. In the v1.1 run Qdrant was not listening, so the script stopped before semantic retrieval and recorded that limitation; it never falls back to the deterministic store.
 
 ## Security and failure boundaries
 
@@ -571,7 +579,15 @@ Execute com:
 PYTHONPATH=src .venv-semantic-cpu/bin/python scripts/run_baseline_vs_agentic_evaluation.py
 ```
 
-O registro completo por caso, agregado, por categoria, latência, tentativas/rewrite/chamadas, estratégia e erros está em `artifacts/benchmarks/baseline-vs-agentic-v2.json`.
+Na versão 1.1, o dataset/corpus congelado é preservado e a comparação detalhada por caso é gravada em `artifacts/benchmarks/baseline-vs-agentic-v1.1.json`, incluindo os valores anteriores da v2 e regressões explícitas. O caminho de grounding agora infere e acrescenta citações de chunks somente quando cada frase tem pelo menos dois tokens não triviais sustentados por um chunk enviado. Respostas sem suporte continuam em falha segura.
+
+Execute o smoke de integração real com:
+
+```bash
+PYTHONPATH=src .venv-semantic-cpu/bin/python scripts/run_integration_smoke.py
+```
+
+O smoke exige Qdrant em `127.0.0.1:6333`, SentenceTransformers `all-MiniLM-L6-v2`, Ollama `qwen2.5:3b` e MCP. Na execução v1.1, o Qdrant não estava escutando; o script parou antes da recuperação semântica e registrou essa limitação, sem fallback para o armazenamento determinístico.
 
 ## Limites de segurança e falha
 
